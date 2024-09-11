@@ -90,6 +90,10 @@ Big elements - padding: 0.4rem 0.8rem
 	--secondary-yellow: rgba(255, 235, 60, 0.9);
 }
 
+.root-layout {
+	overflow: hidden;
+}
+
 body {
 	font-size: 1.6rem;
 	padding: 1.6rem 2.4rem 0 2.4rem;
@@ -192,7 +196,7 @@ nav {
 }
 
 .nav-links > :not(:last-child) {
-	transition: 0.3s;
+	transition: 0.4s;
 	/*box-shadow: 1px 3px 6px rgba(250, 250, 250, 0.2);*/
 	color: rgba(200, 230, 210, 1);
 }
@@ -219,7 +223,7 @@ nav {
 	border: 0.1rem solid rgba(255, 235, 60, 0.9);
 	border-radius: 0.4rem;
 
-	transition: 0.3s;
+	transition: 0.4s;
 }
 
 .nav-links > :last-child:hover,
@@ -397,7 +401,7 @@ nav {
 	border-bottom: solid 1px rgba(255, 235, 60, 0.9);
 	padding: 0.4rem;
 
-	transition: 0.3s;
+	transition: 0.4s;
 }
 
 .hero-cta > :not(:first-child):hover,
@@ -416,7 +420,7 @@ nav {
 
 	border: 0.1rem solid rgba(255, 235, 60, 0.9);
 
-	transition: 0.3s;
+	transition: 0.4s;
 }
 
 .hero-cta > :first-child:hover,
@@ -447,7 +451,7 @@ nav {
 .hero-icons a svg {
 	font-size: 3.6rem;
 	padding: 0.4rem;
-	transition: 0.3s;
+	transition: 0.4s;
 
 	border-radius: 8px;
 	border: solid 1px rgba(0, 0, 0, 1);
@@ -470,8 +474,10 @@ nav {
 	display: flex;
 	justify-content: center;
 	align-items: center;
-	width: 500px;
+	justify-self: center;
+	width: clamp(250px, 50%, 500px);
 	margin: 50px 0 50px 0;
+	transform: translateX(-8%);
 }
 .hero-img * {
 	box-sizing: border-box;
@@ -507,13 +513,21 @@ nav {
 }
 */
 .home-container div:nth-child(2) img {
-	width: 60%;
-
-	aspect-ratio: 1 / 1;
+	width: clamp(300px, 60%, 400px);
+	align-self: center;
+	/*
 	border-radius: 20px;
-	margin-top: 3.2rem;
+	margin-top: clamp(32px, auto, auto);
 	margin-left: 3.2rem;
-	margin-bottom: 3.2rem;
+	margin-bottom: clamp(32px, auto, auto);
+
+
+
+	margin: clamp(32px, 40%, 69px), 0, 32px, clamp(32px, 40%, 69px);
+*/
+
+	margin: clamp(32px, 10%, 240px) clamp(32px, 10%, 240px)
+		clamp(32px, 10%, 240px) 0;
 
 	box-shadow: 4px 6px 20px rgba(0, 0, 0, 0.8); /*,
   -3px -5px 20px rgba(50, 50, 50, 0.4);*/
@@ -521,8 +535,10 @@ nav {
 }
 
 .home-container div:nth-child(3) img {
+	min-width: 430px; /*value when MQ <1040px*/
+
 	border-radius: 20px;
-	margin: 3.2rem;
+	margin: clamp(4.8rem, 8%, 6.4rem);
 	/*just in case, unneeded*/
 	align-self: center;
 	justify-self: center;
@@ -548,7 +564,7 @@ nav {
 	flex-direction: column;
 	gap: 1.2rem;
 
-	padding: 3.2rem;
+	padding: clamp(3.2rem, 8%, 6.4rem);
 	font-size: 3rem;
 	color: rgba(200, 230, 210, 1);
 }
@@ -601,7 +617,7 @@ nav {
 	background-color: rgba(255, 235, 60, 0.9);
 	color: rgba(0, 0, 0, 0.85);
 	border: 0.1rem solid rgba(255, 235, 60, 0.9);
-	transition: 0.3s;
+	transition: 0.4s;
 }
 
 .home-about > :last-child:hover,
@@ -619,6 +635,8 @@ CTA SECTION
 *********************/
 /* Hero after Z CtA */
 /* I will kms section */
+/*you NEEED to make a parent to this section that will make them go towards the center or otherwise you will encounter splitting on bigger screens (or MQ to each vw*/
+/*actually you dont have to, it is already set as 2 different items, you just need to self center them*/
 
 .home-cta-left,
 .home-cta-right {
@@ -627,7 +645,11 @@ CTA SECTION
 	/*position: relative;*/
 	border-bottom: none;
 
-	height: 90vh;
+	/*had to justify bottom 2 items by themselves so that they can be in center, they are 2 different items so they would be centered in their box, shouldve justify-items: center*/
+	--width: 525px;
+
+	height: calc(var(--width) * 1);
+	width: clamp(calc(475px), 95%, var(--width));
 
 	justify-self: center;
 
@@ -647,22 +669,26 @@ CTA SECTION
 /*letters from that offgreen to green//yellow shade*/
 .background-left {
 	position: absolute;
+
+	/*so that it cannot get selected*/
+	pointer-events: none;
+	user-select: none;
 	/*
 	background-repeat: no-repeat;
 	background-position: center;
    */
+	width: 70%;
+	height: 70%;
+
 	top: 50%;
 	left: 50%;
 	translate: -50% -50%;
 
-	width: 80%;
-	height: 80%;
+	filter: blur(1px);
 
-	filter: blur(0.5px);
+	border-radius: inherit;
 
-	border-radius: 40px 0 0 40px;
-
-	transition: 0.6s;
+	transition: 0.9s;
 
 	z-index: 10;
 }
@@ -679,18 +705,19 @@ CTA SECTION
 	height: 100%;
 	width: 100%;
 	position: absolute;
+	overflow: none;
 	background-repeat: no-repeat;
-	background-size: 100% 100%;
-	background-position: center;
+	background-size: 100% 200%;
+	background-position: top -300px left 0px;
 
 	background-image: linear-gradient(
-		rgba(0, 0, 0, 0.8) 10%,
-		hsla(141, 100%, 80%, 0.8) 200%
+		rgba(0, 0, 0, 0.8) 15%,
+		hsla(141, 70%, 70%, 0.8) 200%
 	);
 
 	filter: blur(0px);
 
-	border-radius: 40px 0 0 40px;
+	border-radius: inherit;
 
 	transition: 0.6s;
 
@@ -699,10 +726,12 @@ CTA SECTION
 
 .home-cta-left {
 	position: relative;
+	justify-self: right;
 
 	/*border-radius: 40px 0 0 40px;*/
 
-	margin: 3.2rem 0 3.2rem 3.2rem;
+	margin: clamp(32px, 10%, 64px) 0 clamp(32px, 10%, 64px)
+		clamp(32px, 100%, 64px);
 
 	border-radius: 40px 0 0 40px;
 
@@ -717,20 +746,20 @@ CTA SECTION
 .border-left {
 	content: "";
 	position: absolute;
-	height: 100%;
-	width: 100%;
-	background: linear-gradient(to top, transparent, hsla(141, 100%, 62%, 0.6));
+	height: calc(100% + 2px);
+	width: calc(100% + 1px);
+	background: linear-gradient(to top, transparent, hsla(141, 100%, 80%, 1));
 	border-radius: inherit;
-	top: 50%;
-	left: 50%;
-	translate: -50% -50%;
-	padding: 2px;
+
+	bottom: -1px;
+	right: 0px;
+	/*translate: -50% -50%;*/
 
 	box-sizing: initial;
 
-	z-index: 1;
+	opacity: 00%;
 
-	opacity: 0%;
+	z-index: 1;
 
 	transition: all 0.6s;
 }
@@ -741,38 +770,40 @@ CTA SECTION
 /*backgrounds are having z-index because otherwise they are not on top enough to be hovered on*/
 .background-right {
 	position: absolute;
-	height: 80%;
-	width: 80%;
+	height: 70%;
+	width: 70%;
 	top: 50%;
 	left: 50%;
 	translate: -50% -50%;
-	background-repeat: no-repeat;
-	background-position: center;
 
-	filter: blur(0.5px);
+	pointer-events: none;
+	user-select: none;
+
+	filter: blur(1px);
 	z-index: 20;
 	border-radius: inherit;
-	overflow: clip;
 
-	transition: all 0.6s;
+	transition: 0.9s;
 }
 
 .gradient-right {
 	height: 100%;
 	width: 100%;
-	overflow: clip;
+	overflow: none;
 	position: absolute;
 	background-repeat: no-repeat;
 	background-size: 100% 200%;
-	background-position: top -150px left 0px;
+	background-position: top -300px left 0px;
 	/*in JSX bck-pos top -150px to 0 animation should apply*/
+	/*and increase border right to 100%*/
 
 	/*gradient property has been changed APPLY CHANGES TO LEFT SIDE!!!*/
 	background-image: linear-gradient(
 		rgba(0, 0, 0, 0.8) 15%,
-		hsla(54, 100%, 80%, 0.8) 120%
+		hsla(54, 70%, 70%, 0.8) 200%
 	);
-	transform: translate(0, 0px);
+
+	/*transform: translate(0, 0px); does not work*/
 
 	filter: blur(0px);
 
@@ -784,11 +815,14 @@ CTA SECTION
 }
 
 .home-cta-right {
+	justify-self: left;
 	position: relative;
 	/*padding: 3rem 3rem 3rem 0;*/
 
 	border-radius: 0 40px 40px 0;
-	margin: 3.2rem 3.2rem 3.2rem 0;
+	margin: clamp(32px, 10%, 64px) clamp(32px, 10%, 64px)
+		clamp(32px, 100%, 64px) 0;
+
 	/*
   border-left: 4px inset transparent;
   border-right: 4px inset transparent;
@@ -796,11 +830,31 @@ CTA SECTION
   border-bottom: 4px inset transparent;
   overflow: hidden;
   */
-
-	transition: all 0.6s;
+	z-index: 10;
+	transition: all linear 0.6s;
 }
 /*150% to 250% into having border (any kind) that is yellow*/
 /*125 to 200*/
+.border-right {
+	content: "";
+	position: absolute;
+	height: calc(100% + 2px);
+	width: calc(100% + 1px);
+	background: linear-gradient(to top, transparent, hsla(54, 100%, 80%, 1));
+	border-radius: inherit;
+
+	bottom: -1px;
+	left: 0px;
+	/*this is currently the best way to have border in such way that it wont bug AT ALL when being resized*/
+
+	box-sizing: initial;
+
+	z-index: 1;
+	/*rev op=0 z=1*/
+	opacity: 00%;
+
+	transition: all 0.6s;
+}
 
 /*using border while not having border bottom with border-radius creates a lot of approximation errors so I think it is far better to have solution with ::after element (but having already hover effect means that we have to add <div> in HTML*/
 
@@ -828,19 +882,39 @@ CTA SECTION
 .home-cta-left > p,
 .home-cta-right > p,
 .home-cta-right > a {
-	pointer-events: none;
 	z-index: 999;
 
 	font-size: 8rem;
 	font-weight: 800;
-	color: rgba(255, 255, 255, 1);
+	color: hsla(0, 0%, 80%, 1);
+	transition: 0.6s;
+
+	/*color: hsl(140, 38%, 84%);*/
 
 	padding: 3.2rem;
 }
-.home-cta-right > a {
-	font-size: 8rem;
+.home-cta-right > p > a {
+	font-size: 6rem;
 	font-weight: 800;
-	color: rgba(255, 255, 255, 1);
+	color: hsla(0, 0%, 80%, 1);
+
+	display: inline-block;
+	max-width: -moz-fit-content;
+	max-width: fit-content;
+	font-weight: 500;
+	padding: 0.4rem 0.8rem;
+	border-radius: 0.6rem;
+	background-color: rgba(255, 235, 60, 0.9);
+	color: rgba(0, 0, 0, 0.85);
+	border: 0.1rem solid rgba(255, 235, 60, 0.9);
+	transition: 0.4s;
+}
+
+.home-cta-right > p > a:hover {
+	background-color: rgba(20, 20, 20, 0.8);
+	color: hsla(54, 100%, 62%, 0.9);
+	border: 1px solid rgba(255, 235, 60, 0.9);
+	box-shadow: 0px 0px 20px rgba(255, 235, 60, 0.4);
 }
 
 :any-link {

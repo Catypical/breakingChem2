@@ -60,6 +60,10 @@ export default function Home() {
 	const arf = function () {
 		console.log(2);
 	};
+	/*make functions that are not b/arf and it will do anthing oME*/
+	/*you can make multiples of them because you will use multiple of those*/
+	/*also you could make one inline, make let oME, and then use it anywhere*/
+
 	const barf = function () {
 		console.log("4u");
 	};
@@ -285,9 +289,57 @@ export default function Home() {
 					className="home-cta-left overlay-dk"
 					onMouseOver={(e) => {
 						arf();
+						document
+							.querySelectorAll(".home-cta-left")[0]
+							.setAttribute(
+								//this sets background shade to be darker
+								"style",
+								"z-index: 20;"
+							);
+						document
+							.querySelectorAll(".gradient-left")[0]
+							.setAttribute(
+								//this sets background shade to be darker
+								"style",
+								"background-position: top 0px left 0px;  background-size: 100% 250%;"
+							);
+						document
+							.querySelectorAll(".border-left")[0]
+							.setAttribute(
+								//this sets background shade to be darker
+								"style",
+								"opacity: 100%"
+							);
+						document
+							.querySelectorAll(".background-left")[0]
+							.setAttribute(
+								//this sets background shade to be darker
+								"style",
+								"width: 75%; height: 75%; filter: blur(3px)"
+							);
+						document
+							.querySelectorAll(".home-cta-left > p")[0]
+							.setAttribute(
+								"style",
+								"color: rgba(200, 230, 210, 1);"
+							);
 					}}
 					onMouseOut={(e) => {
 						barf();
+						document
+							.querySelectorAll(".home-cta-left")[0]
+							.setAttribute(
+								//this sets background shade to be darker
+								"style",
+								"z-index: 8;"
+							);
+						document
+							.querySelectorAll(".gradient-left")[0]
+							.setAttribute(
+								//this sets background shade to be darker
+								"style",
+								"unset: all;"
+							);
 						document
 							.querySelectorAll(".border-left")[0]
 							.setAttribute(
@@ -295,6 +347,16 @@ export default function Home() {
 								"style",
 								"unset: all"
 							);
+						document
+							.querySelectorAll(".background-left")[0]
+							.setAttribute(
+								//this sets background shade to be darker
+								"style",
+								"unset: all"
+							);
+						document
+							.querySelectorAll(".home-cta-left > p")[0]
+							.setAttribute("style", "unset: all");
 						//write here the linear gradient for border
 					}}
 				>
@@ -307,16 +369,95 @@ export default function Home() {
 					{/*
           <LazyLoadImage src={ChemF} />*/}
 				</div>
-				<div className="home-cta-right overlay-dk">
+				<div
+					className="home-cta-right overlay-dk"
+					onMouseOver={(e) => {
+						document
+							.querySelectorAll(".home-cta-right > p")[0]
+							.setAttribute(
+								"style",
+								"color: hsla(54, 38%, 84%, 1);"
+							);
+						document
+							.querySelectorAll(".home-cta-right")[0]
+							.setAttribute(
+								//this sets background shade to be darker
+								"style",
+								"z-index: 20;"
+							);
+						document
+							.querySelectorAll(".gradient-right")[0]
+							.setAttribute(
+								//this sets background shade to be darker
+								"style",
+								"background-position: top 0px left 0px;  background-size: 100% 250%; z-index: 60;"
+							);
+						document
+							.querySelectorAll(".border-right")[0]
+							.setAttribute(
+								//this sets background shade to be darker
+								"style",
+								"opacity: 100%; z-index: 40"
+								//REV z = 40
+							);
+						document
+							.querySelectorAll(".background-right")[0]
+							.setAttribute(
+								//this sets background shade to be darker
+								"style",
+								"width: 75%; height: 75%; z-index: 50; filter: blur(3px);"
+							);
+					}}
+					onMouseLeave={(e) => {
+						//try to use event e that happens to revert changes made
+						document
+							.querySelectorAll(".home-cta-right")[0]
+							.setAttribute(
+								//this sets background shade to be darker
+								"style",
+								"unset: all"
+							);
+						document
+							.querySelectorAll(".gradient-right")[0]
+							.setAttribute(
+								//this sets background shade to be darker
+								"style",
+								"unset: all;"
+							);
+						document
+							.querySelectorAll(".border-right")[0]
+							.setAttribute(
+								//this sets background shade to be darker
+								"style",
+								"unset: all"
+							);
+						document
+							.querySelectorAll(".background-right")[0]
+							.setAttribute(
+								//this sets background shade to be darker
+								"style",
+								"unset: all"
+							);
+						document
+							.querySelectorAll(".home-cta-right > p")[0]
+							.setAttribute("style", "unset: all;");
+					}}
+				>
 					<div className="border-right"></div>
 					<img src={success} className="background-right"></img>
 					<div className="gradient-right"></div>
 					<p>
-						To <span>Acing</span> your exams!
+						To
+						<br />
+						<NavLink to="/booking">Acing</NavLink>
+						<br />
+						your
+						<br />
+						exams
 					</p>
 
 					{/*<LazyLoadImage src={ChemA} />*/}
-					<NavLink to="/booking">Booking</NavLink>
+					{/*<NavLink to="/booking">Booking</NavLink>*/}
 				</div>
 			</div>
 		</>
