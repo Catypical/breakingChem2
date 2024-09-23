@@ -93,16 +93,16 @@ export default function Home() {
 						</div>
 					</div>
 					<div className="hero-icons">
-						<NavLink>
+						<NavLink to="https://www.youtube.com/" target="_blank">
 							<FontAwesomeIcon icon={faEnvelope} />
 						</NavLink>
-						<NavLink>
+						<NavLink target="_blank">
 							<FontAwesomeIcon icon={faFacebook} />
 						</NavLink>
-						<NavLink>
+						<NavLink target="_blank">
 							<FontAwesomeIcon icon={faTwitter} />
 						</NavLink>
-						<NavLink>
+						<NavLink target="_blank">
 							<FontAwesomeIcon icon={faYoutube} />
 						</NavLink>
 					</div>
@@ -116,84 +116,87 @@ export default function Home() {
 			</div>
 			<div className="home-container">
 				<div className="home-about">
-					<p>Quality</p>
+					<div className="about-container">
+						<p>Quality</p>
 
-					<div>
-						<FontAwesomeIcon icon={faGreaterThan} />
-						<p>
-							Graduated from the{" "}
-							<NavLink to="https://www.caltech.edu/">
-								California Institute of Technology
-							</NavLink>
-						</p>
+						<div>
+							<FontAwesomeIcon icon={faGreaterThan} />
+							<p>
+								Graduated from the{" "}
+								<NavLink to="https://www.caltech.edu/">
+									California Institute of Technology
+								</NavLink>
+							</p>
+						</div>
+
+						<div>
+							<FontAwesomeIcon icon={faGreaterThan} />
+							<p>
+								Former researcher at{" "}
+								<NavLink to="https://www.sandia.gov/">
+									Sandia National Laboratory
+								</NavLink>
+							</p>
+						</div>
+
+						<div>
+							<FontAwesomeIcon icon={faGreaterThan} />
+							<p>
+								Contributer on photon radiology and Nobel
+								laureate{" "}
+							</p>
+						</div>
+
+						<NavLink
+							onMouseEnter={(e) => {
+								/*this is the generalized way of selecting links and svgs above CtAs*/
+								//this destructures and makes HTMLCollection into Array
+								[...e.target.parentElement.children].forEach(
+									(i) => {
+										//console.log([...i.children]);
+										[...i.children].forEach((i) => {
+											[
+												...i.parentElement.querySelectorAll(
+													"* > *:has(:first-child)"
+												),
+											].forEach((i) =>
+												i
+													.querySelector("*")
+													.setAttribute(
+														"style",
+														"color: var(--secondary-yellow); text-decoration: underline 1px transparent;"
+													)
+											);
+										});
+									}
+								);
+							}}
+							onMouseLeave={(e) => {
+								[...e.target.parentElement.children].forEach(
+									(i) => {
+										//console.log([...i.children]);
+										[...i.children].forEach((i) => {
+											[
+												...i.parentElement.querySelectorAll(
+													"* > *:has(:first-child)"
+												),
+											].forEach((i) =>
+												i
+													.querySelector("*")
+													.setAttribute(
+														"style",
+														"unset:all"
+													)
+											);
+										});
+									}
+								);
+							}}
+							to="/about-me"
+						>
+							About me
+						</NavLink>
 					</div>
-
-					<div>
-						<FontAwesomeIcon icon={faGreaterThan} />
-						<p>
-							Former researcher at{" "}
-							<NavLink to="https://www.sandia.gov/">
-								Sandia National Laboratory
-							</NavLink>
-						</p>
-					</div>
-
-					<div>
-						<FontAwesomeIcon icon={faGreaterThan} />
-						<p>
-							Contributer on photon radiology and Nobel laureate{" "}
-						</p>
-					</div>
-
-					<NavLink
-						onMouseEnter={(e) => {
-							/*this is the generalized way of selecting links and svgs above CtAs*/
-							//this destructures and makes HTMLCollection into Array
-							[...e.target.parentElement.children].forEach(
-								(i) => {
-									//console.log([...i.children]);
-									[...i.children].forEach((i) => {
-										[
-											...i.parentElement.querySelectorAll(
-												"* > *:has(:first-child)"
-											),
-										].forEach((i) =>
-											i
-												.querySelector("*")
-												.setAttribute(
-													"style",
-													"color: var(--secondary-yellow); text-decoration: underline 1px transparent;"
-												)
-										);
-									});
-								}
-							);
-						}}
-						onMouseLeave={(e) => {
-							[...e.target.parentElement.children].forEach(
-								(i) => {
-									//console.log([...i.children]);
-									[...i.children].forEach((i) => {
-										[
-											...i.parentElement.querySelectorAll(
-												"* > *:has(:first-child)"
-											),
-										].forEach((i) =>
-											i
-												.querySelector("*")
-												.setAttribute(
-													"style",
-													"unset:all"
-												)
-										);
-									});
-								}
-							);
-						}}
-						to="/about-me"
-					>
-						About me
-					</NavLink>
 				</div>
 				<div className="xdxdxd">
 					<LazyLoadImage

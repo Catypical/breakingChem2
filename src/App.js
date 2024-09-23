@@ -1,9 +1,9 @@
 import {
-  createBrowserRouter,
-  Route,
-  NavLink,
-  createRoutesFromElements,
-  RouterProvider,
+	createBrowserRouter,
+	Route,
+	NavLink,
+	createRoutesFromElements,
+	RouterProvider,
 } from "react-router-dom";
 
 // importing pages
@@ -19,19 +19,19 @@ import RootLayout from "./layouts/RootLayout";
 ///////////////
 
 const router = createBrowserRouter(
-  createRoutesFromElements(
-    <Route path="/" element={<RootLayout />}>
-      <Route path="/" element={<Home />} />
-      <Route path="AboutMe" element={<AboutMe />} />
-      <Route path="AboutClasses" element={<AboutClasses />} />
-      <Route path="Booking" element={<Booking />} />
+	createRoutesFromElements(
+		<Route path="/" element={<RootLayout />}>
+			<Route path="/" element={<Home />} />
+			<Route path="AboutMe" element={<AboutMe />} />
+			<Route path="AboutClasses" element={<AboutClasses />} />
+			<Route path="Booking" element={<Booking />} />
 
-      <Route path="*" element={<NotFound />} />
-    </Route>
-  )
+			<Route path="*" element={<NotFound />} />
+		</Route>
+	)
 );
 function App() {
-  return <RouterProvider router={router} />;
+	return <RouterProvider router={router} />;
 }
 
 export default App;

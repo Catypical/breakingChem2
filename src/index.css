@@ -91,7 +91,8 @@ Big elements - padding: 0.4rem 0.8rem
 }
 
 .root-layout {
-	overflow: hidden;
+	overflow-x: hidden;
+	overflow-y: visible;
 }
 
 body {
@@ -122,6 +123,9 @@ html {
 	background-color: rgb(20 20 20);
 	/*recheck this later*/
 	overflow-x: hidden;
+	overflow-y: visible;
+
+	scroll-behavior: smooth !important;
 }
 
 body {
@@ -171,15 +175,20 @@ nav h1 sup {
 
 nav div h1 {
 	font-size: 3rem;
+	line-height: 3.05rem;
 }
 
-h1:not(:first-child) {
+nav h1:not(:first-child) {
+	/*careful this could ruin bunch of code xd*/
 	text-indent: 1rem;
 }
 
-nav {
+.root-layout nav {
 	display: flex;
 	justify-content: space-between;
+
+	overflow-x: hidden;
+	overflow-y: visible;
 
 	padding-bottom: 1.6rem;
 	border-bottom: 0.1rem solid rgba(54, 148, 87, 0.8);
@@ -191,14 +200,18 @@ nav {
 	gap: 3.2rem;
 	margin: 0 3.2rem 0 0;
 
-	font-weight: 600;
-	font-size: 1.8rem;
+	font-weight: 500;
+	font-size: clamp(2rem, calc(0.0049 * (100vw - 1060px) + 2rem), 2.4rem);
+
+	white-space: nowrap;
 }
 
 .nav-links > :not(:last-child) {
-	transition: 0.4s;
 	/*box-shadow: 1px 3px 6px rgba(250, 250, 250, 0.2);*/
 	color: rgba(200, 230, 210, 1);
+
+	transition-property: color;
+	transition-duration: 0.4s;
 }
 
 .nav-links > :not(:last-child):hover,
@@ -223,7 +236,8 @@ nav {
 	border: 0.1rem solid rgba(255, 235, 60, 0.9);
 	border-radius: 0.4rem;
 
-	transition: 0.4s;
+	transition-property: background-color, color, border, box-shadow;
+	transition-duration: 0.4s;
 }
 
 .nav-links > :last-child:hover,
@@ -232,14 +246,14 @@ nav {
 	color: rgba(255, 235, 60, 0.9);
 
 	border: 0.1rem solid rgba(255, 235, 60, 0.9);
-	border-radius: 30px;
+	border-radius: 5px;
 
-	box-shadow: 0px 0px 20px rgba(255, 235, 60, 0.4);
+	box-shadow: 0px 0px 13px rgba(255, 235, 60, 0.4);
 }
 
 .nav-links * {
 	padding: 0.4rem 0.8rem;
-	border-radius: 0.6rem;
+	border-radius: 6px;
 }
 
 /**************************/
@@ -307,12 +321,12 @@ nav {
 	display: flex;
 	grid-area: ft-bar;
 	font-size: 1.2rem;
+	line-height: 1.05rem;
 	gap: 1rem;
 
 	padding: 0.4rem;
 
 	border-top: 0.1rem solid rgba(54, 148, 87, 0.8);
-	border-bottom: 0.1rem solid rgba(54, 148, 87, 0.8);
 }
 
 .footer-logo a {
@@ -322,8 +336,13 @@ nav {
 .footer-logo p {
 	display: inline-block;
 	font-size: 1rem;
+
 	/*change color*/
 	align-self: end;
+}
+
+.footer-logo a div h1:nth-child(2) {
+	text-indent: 0.6rem;
 }
 
 /**************************/
@@ -359,7 +378,13 @@ nav {
 	display: flex;
 	gap: 2rem;
 	flex-direction: column;
-	font-size: 4.4rem;
+	font-size: clamp(4.4rem, calc(0.0378 * (100vw - 1060px) + 4.4rem), 6.2rem);
+	/*
+   NOTE FOR ALL!!!!!
+   const modifier is ratio of: max-min / MQrangeDiff
+   max-min is visible af here
+   MQrangeDiff is on what range I want this to occur
+   */
 
 	font-weight: 600;
 }
@@ -372,7 +397,7 @@ nav {
 	display: flex;
 	flex-direction: column;
 	gap: 1.2rem;
-	font-size: 5.2rem;
+	font-size: clamp(5.2rem, calc(0.0462 * (100vw - 1060px) + 5.2rem), 7.4rem);
 }
 
 .hero-main-text span {
@@ -401,7 +426,8 @@ nav {
 	border-bottom: solid 1px rgba(255, 235, 60, 0.9);
 	padding: 0.4rem;
 
-	transition: 0.4s;
+	transition-property: color, border;
+	transition-duration: 0.4s;
 }
 
 .hero-cta > :not(:first-child):hover,
@@ -420,7 +446,8 @@ nav {
 
 	border: 0.1rem solid rgba(255, 235, 60, 0.9);
 
-	transition: 0.4s;
+	transition-property: background-color, color, border, box-shadow;
+	transition-duration: 0.4s;
 }
 
 .hero-cta > :first-child:hover,
@@ -449,9 +476,11 @@ nav {
 }
 
 .hero-icons a svg {
-	font-size: 3.6rem;
+	font-size: clamp(3.6rem, calc(0.0336 * (100vw - 1060px) + 3.6rem), 5.2rem);
 	padding: 0.4rem;
-	transition: 0.4s;
+	/*transition: 0.4s;*/
+	transition-property: border, background-color, color, box-shadow;
+	transition-duration: 0.4s;
 
 	border-radius: 8px;
 	border: solid 1px rgba(0, 0, 0, 1);
@@ -475,7 +504,7 @@ nav {
 	justify-content: center;
 	align-items: center;
 	justify-self: center;
-	width: clamp(250px, 50%, 500px);
+	width: clamp(375px, calc(0.2626 * (100vw - 1060px) + 375px), 500px);
 	margin: 50px 0 50px 0;
 	transform: translateX(-8%);
 }
@@ -496,12 +525,13 @@ nav {
 	grid-template: min-content min-content 1fr / 1fr 1fr;
 }
 
-/*
 .home-container div:nth-child(2) {
+	justify-content: start;
 }
+
 .home-container div:nth-child(3) {
+	justify-content: end;
 }
-*/
 
 .home-container div {
 	display: flex;
@@ -526,19 +556,25 @@ nav {
 	margin: clamp(32px, 40%, 69px), 0, 32px, clamp(32px, 40%, 69px);
 */
 
-	margin: clamp(32px, 10%, 240px) clamp(32px, 10%, 240px)
+	/*margin: clamp(32px, 10%, 240px) clamp(32px, 10%, 240px)
 		clamp(32px, 10%, 240px) 0;
+*/
+
+	margin: clamp(2.4rem, calc(0.0293 * (100vw - 1060px) + 2.4rem), 4.8rem);
 
 	box-shadow: 4px 6px 20px rgba(0, 0, 0, 0.8); /*,
   -3px -5px 20px rgba(50, 50, 50, 0.4);*/
+	border-radius: 20px;
 	opacity: 80%;
 }
 
 .home-container div:nth-child(3) img {
-	min-width: 430px; /*value when MQ <1040px*/
-
+	/* min-width: 430px; value when MQ <1040px*/
+	width: clamp(460px, calc(0.3537 * (100vw - 1060px) + 460px), 750px);
+	/*coef changed for for vw 1880px */
 	border-radius: 20px;
-	margin: clamp(4.8rem, 8%, 6.4rem);
+	margin: clamp(24px, calc(0.0244 * (100vw - 1060px) + 24px), 44px);
+
 	/*just in case, unneeded*/
 	align-self: center;
 	justify-self: center;
@@ -564,12 +600,23 @@ nav {
 	flex-direction: column;
 	gap: 1.2rem;
 
-	padding: clamp(3.2rem, 8%, 6.4rem);
+	padding: clamp(2.4rem, calc(0.0293 * (100vw - 1060px) + 2.4rem), 4.8rem);
 	font-size: 3rem;
 	color: rgba(200, 230, 210, 1);
 }
 
-.home-about > :first-child,
+.about-container {
+	/*purpose of this is centering about section, classes sec doenst need it bcs the photo on the left gives enough visual input*/
+	/*self note, your image padding below right will be the same for this*/
+	/*perhaps no, it feels good for some reason, maybe offset?*/
+	display: inline-flex;
+	align-self: center;
+	flex-direction: column;
+	gap: 1.2rem;
+	min-width: 0px;
+}
+
+.home-about > * > :first-child,
 .home-classes > :first-child {
 	font-size: 4.4rem;
 	font-weight: 500;
@@ -577,14 +624,14 @@ nav {
 	color: rgba(54, 148, 87, 1);
 }
 
-.home-about div a,
+.home-about > * > div a,
 .home-classes div a {
 	transition: 0.3;
 	text-decoration: underline 1px var(--main-green);
 }
-.home-about div a:hover,
+.home-about > * > div a:hover,
 .home-classes div a:hover,
-.home-about div a:active,
+.home-about > * > div a:active,
 .home-classes div a:active {
 	color: rgba(54, 148, 87, 0.8);
 	text-decoration: underline 1px transparent;
@@ -595,16 +642,17 @@ nav {
 	color: var(--main-green);
 }
 
-.home-about *,
+.home-about * > *,
 .home-classes * {
 	justify-items: end;
 
 	gap: 1rem;
 
-	transition: 0.6s;
+	transition-property: color, text-decoration;
+	transition-duration: 0.6s;
 }
 
-.home-about > :last-child,
+.home-about > * > :last-child,
 .home-classes > :last-child {
 	/*margin: 1.2rem 0;*/
 
@@ -617,12 +665,14 @@ nav {
 	background-color: rgba(255, 235, 60, 0.9);
 	color: rgba(0, 0, 0, 0.85);
 	border: 0.1rem solid rgba(255, 235, 60, 0.9);
-	transition: 0.4s;
+
+	transition-property: background-color, color, border, box-shadow;
+	transition-duration: 0.4s;
 }
 
-.home-about > :last-child:hover,
+.home-about > * > :last-child:hover,
 .home-classes > :last-child:hover,
-.home-about > :last-child:active,
+.home-about > * > :last-child:active,
 .home-classes > :last-child:active {
 	background-color: rgba(255, 235, 60, 00);
 	color: hsla(54, 100%, 62%, 0.9);
@@ -646,10 +696,19 @@ CTA SECTION
 	border-bottom: none;
 
 	/*had to justify bottom 2 items by themselves so that they can be in center, they are 2 different items so they would be centered in their box, shouldve justify-items: center*/
-	--width: 525px;
+	--width: 600px;
 
 	height: calc(var(--width) * 1);
-	width: clamp(calc(475px), 95%, var(--width));
+	width: clamp(
+		calc(475px),
+		calc(0.4727 * (100vw - 1060px) + 475px),
+		var(--width)
+	);
+	/*basically 100vw - 1060px is function that has 0 begining at 1060px display width where 100vw is variable
+   0.4727 is modifier that makes scaling up to 1536px happen in 225px instead of 476px
+   +475px is constant so that function begins at 475px instead of 0px
+   min and max are self explanatory
+   */
 
 	justify-self: center;
 
@@ -658,6 +717,11 @@ CTA SECTION
 	/*align-items: center;*/
 
 	background-position: center;
+}
+
+.home-cta-right::after {
+	/*purely for arrow in this section*/
+	position: absolute;
 }
 
 /*
@@ -735,8 +799,6 @@ CTA SECTION
 
 	border-radius: 40px 0 0 40px;
 
-	transition: linear 0.6s;
-
 	z-index: 11;
 }
 /*
@@ -761,7 +823,7 @@ CTA SECTION
 
 	z-index: 1;
 
-	transition: all 0.6s;
+	transition: 0.6s;
 }
 /* transition does not work at all */
 /* animation requires @keyframes where we are in HTML inline */
@@ -831,7 +893,8 @@ CTA SECTION
   overflow: hidden;
   */
 	z-index: 10;
-	transition: all linear 0.6s;
+	/*no need for transition of whole elm*/
+	transition: all linear 0s;
 }
 /*150% to 250% into having border (any kind) that is yellow*/
 /*125 to 200*/
@@ -853,7 +916,7 @@ CTA SECTION
 	/*rev op=0 z=1*/
 	opacity: 00%;
 
-	transition: all 0.6s;
+	transition: 0.6s;
 }
 
 /*using border while not having border bottom with border-radius creates a lot of approximation errors so I think it is far better to have solution with ::after element (but having already hover effect means that we have to add <div> in HTML*/
@@ -882,12 +945,15 @@ CTA SECTION
 .home-cta-left > p,
 .home-cta-right > p,
 .home-cta-right > a {
+	word-spacing: 100vw; /*only way to force words into a new line always*/
 	z-index: 999;
 
 	font-size: 8rem;
 	font-weight: 800;
 	color: hsla(0, 0%, 80%, 1);
-	transition: 0.6s;
+
+	transition-property: color;
+	transition-duration: 0.6s;
 
 	/*color: hsl(140, 38%, 84%);*/
 
