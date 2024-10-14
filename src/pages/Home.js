@@ -30,6 +30,11 @@ import { calculateNewValue } from "@testing-library/user-event/dist/utils";
 const headElement = document.getElementsByTagName("header");
 console.log(headElement);
 const navH = localStorage.getItem("navH");
+
+/*
+you dont need to do this because localStorage value for navH is constantly being updated
+const [NavH2, setNavH2] = React.useState(localStorage.getItem("navH"));
+*/
 ///
 export default function Home() {
 	const homeAboutCTA = document.querySelector(".home-about > a ");
@@ -75,7 +80,11 @@ export default function Home() {
 	return (
 		<>
 			<div /*using localStorage for dynamic height*/
-				style={{ minHeight: `calc(100vh - ${navH}px + 1px)` }}
+				style={{
+					minHeight: `calc(100vh - ${
+						/*setNavH2(localStorage.getItem("navH"))*/ navH
+					}px + 1px)`,
+				}}
 				className="hero-container"
 			>
 				<div className="hero-left">
@@ -375,6 +384,7 @@ export default function Home() {
 				<div
 					className="home-cta-right overlay-dk"
 					onMouseOver={(e) => {
+						console.log(document.documentElement.clientWidth);
 						document
 							.querySelectorAll(".home-cta-right > p")[0]
 							.setAttribute(
@@ -453,6 +463,8 @@ export default function Home() {
 						To
 						<br />
 						<NavLink to="/booking">Acing</NavLink>
+						<br />
+						all
 						<br />
 						your
 						<br />

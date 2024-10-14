@@ -1,4 +1,7 @@
-@media (1536px < width) {
+/*
+LANDSCAPE QUERIES
+*/
+@media (1536px < width) and ((orientation: landscape)) {
 	.home-about > * > :is(div),
 	.home-classes > :is(div) {
 		max-width: 600px;
@@ -74,7 +77,75 @@
 	}
 }
 
-@media (768px <= width < 1060px) {
+/*
+Δquery = 292px; 
+w0 = 768px; MQmin
+actually you are able to nest calc()
+
+
+// COPY THIS vvvvv
+vvvvvvvvvvvvvvvvvv
+vvvvvvvvvvvvvvvvvv
+
+for root: {
+--MQmino: qmin;
+--MQmin: calc(var(--MQmino) * 1px);
+--MQmaxo: qmax;
+}
+
+--Wmino: min;
+--Wmaxo: max;
+--Wmin: calc(var(--Wmino) * 1px);
+--Wmax: calc(var(--Wmaxo) * 1px);
+
+width: clamp(
+	var(--Wmin),
+	calc(
+		calc(
+			calc(var(--Wmaxo) - var(--Wmino)) /
+			calc(var(--MQmaxo) - var(--MQmino))
+      ) * calc(100vw - var(--MQmin)) + var(--Wmin)
+	),
+	var(--Wmax)
+);
+//COPY THIS ^^^^^^
+^^^^^^^^^^^^^^^^^^ IF REM ΔW * 10 !!!!!
+^^^^^^^^^^^^^^^^^^ 
+dont do width if u dont need width of course, change width to whatever
+//finished the function
+//NOTE, shortcuts can be anything, its fine because its local scoped regardlessly w(idth) f(font)s(ize) pad(ding), mar(gin) gap
+
+--Wmino: min;
+--Wmaxo: max;
+--Wmin: calc(var(--Wmino) * 1px);
+--Wmax: calc(var(--Wmaxo) * 1px);
+--prefClamp: 
+   calc(
+		calc(
+			calc(var(--Wmaxo) - var(--Wmino)) /
+			calc(var(--MQmaxo) - var(--MQmino))
+      ) * calc(100vw - var(--MQmin)) + var(--Wmin)
+	);
+
+width: clamp(
+	var(--Wmin),
+   var(--prefClamp),
+	var(--Wmax)
+);
+
+
+the only way to CONVERT UNITLESS units is to multiply them by the needed unit
+--Wmino: 200;
+--Wmin: calc(200 * 1px); //|-> 200px; 
+*/
+@media (768px <= width < 1060px) and ((orientation: landscape)) {
+	/*Navigation bar*/
+
+	:root {
+		--MQmino: 768;
+		--MQmin: calc(var(--MQmino) * 1px);
+		--MQmaxo: 1060;
+	}
 	nav div h1 {
 		font-size: clamp(2.4rem, calc(0.0021 * (100vw - 768px) + 2.4rem), 3rem);
 		line-height: clamp(
@@ -91,5 +162,473 @@
 	.nav-links {
 		gap: clamp(1.2rem, 0vw, 3rem);
 		font-size: clamp(1.8rem, 0vw, 2rem);
+	}
+
+	/****************/
+	/* hero section */
+
+	.home-container {
+		grid-template-columns: 50% 50%;
+	}
+
+	.home-about {
+		padding-right: 0;
+	}
+
+	/**/
+
+	.hero-img {
+		width: clamp(180px, calc(0.24 * (100vw - 11060px) + 250px), 475px);
+		/*768 to 1060*/ /*old way is above*/
+
+		/*perfected try*/
+		--Wmino: 180;
+		--Wmaxo: 250;
+		--Wmin: calc(var(--Wmino) * 1px);
+		--Wmax: calc(var(--Wmaxo) * 1px);
+
+		width: clamp(
+			var(--Wmin),
+			calc(
+				calc(
+						calc(var(--Wmaxo) - var(--Wmino)) /
+							calc(var(--MQmaxo) - var(--MQmino))
+					) * calc(100vw - var(--MQmin)) + var(--Wmin)
+			),
+			var(--Wmax)
+		);
+	}
+
+	.hero-left {
+		gap: 3rem;
+	}
+
+	.hero-main-text {
+		display: flex;
+		flex-direction: column;
+		gap: 1rem;
+		/*
+		font-size: clamp(
+			3.6rem,
+			calc(0.0415 * (100vw - 11060px) + 3.6rem),
+			4rem
+		);*/
+
+		--Wmino: 3.6;
+		--Wmaxo: 4;
+		--Wmin: calc(var(--Wmino) * 1rem);
+		--Wmax: calc(var(--Wmaxo) * 1rem);
+
+		font-size: clamp(
+			var(--Wmin),
+			calc(
+				calc(
+						calc((var(--Wmaxo) - var(--Wmino)) * 10) /
+							calc(var(--MQmaxo) - var(--MQmino))
+					) * calc(100vw - var(--MQmin)) + var(--Wmin)
+			),
+			var(--Wmax)
+		);
+	}
+
+	.hero-text {
+		gap: 1.4rem;
+		/*
+      font-size: clamp(
+			2.8rem,
+			calc(0.0415 * (100vw - 11060px) + 3.6rem),
+			3.2rem
+		); */
+
+		--Wmino: 2.8;
+		--Wmaxo: 3.2;
+		--Wmin: calc(var(--Wmino) * 1rem);
+		--Wmax: calc(var(--Wmaxo) * 1rem);
+
+		font-size: clamp(
+			var(--Wmin),
+			calc(
+				calc(
+						calc((var(--Wmaxo) - var(--Wmino)) * 10) /
+							calc(var(--MQmaxo) - var(--MQmino))
+					) * calc(100vw - var(--MQmin)) + var(--Wmin)
+			),
+			var(--Wmax)
+		);
+	}
+
+	.hero-cta {
+		gap: 1.8rem;
+	}
+
+	.hero-cta > :first-child {
+		padding: 0.2rem 0.6rem;
+		border-radius: 6px;
+	}
+
+	.hero-icons {
+		gap: clamp(0rem, calc(0.0049 * (100vw - 11060px) + 0.6rem), 0.6rem);
+
+		--Wmino: 0;
+		--Wmaxo: 0.6;
+		--Wmin: calc(var(--Wmino) * 1rem);
+		--Wmax: calc(var(--Wmaxo) * 1rem);
+
+		gap: clamp(
+			var(--Wmin),
+			calc(
+				calc(
+						calc((var(--Wmaxo) - var(--Wmino)) * 10) /
+							calc(var(--MQmaxo) - var(--MQmino))
+					) * calc(100vw - var(--MQmin)) + var(--Wmin)
+			),
+			var(--Wmax)
+		);
+	}
+
+	.hero-icons a {
+		margin: 0.5rem 0;
+	}
+
+	.hero-icons a svg {
+		font-size: clamp(26px, calc(0.0341 * (100vw - 11060px) + 28px), 28px);
+
+		--Wmino: 26;
+		--Wmaxo: 28;
+		--Wmin: calc(var(--Wmino) * 1px);
+		--Wmax: calc(var(--Wmaxo) * 1px);
+
+		font-size: clamp(
+			var(--Wmin),
+			calc(
+				calc(
+						calc((var(--Wmaxo) - var(--Wmino))) /
+							calc(var(--MQmaxo) - var(--MQmino))
+					) * calc(100vw - var(--MQmin)) + var(--Wmin)
+			),
+			var(--Wmax)
+		);
+	}
+
+	/**************/
+	/* below Hero */
+	/**************/
+	/*
+   clamp( , calc((100vw - 768px) + 0rem),  );
+   */
+
+	.about-container,
+	.home-classes {
+		gap: clamp(1rem, calc((100vw - 768px) + 0rem), 1.2rem);
+		font-size: clamp(2.4rem, calc((100vw - 768px) + 0rem), 3rem);
+
+		--Gmino: 1;
+		--Gmaxo: 1.2;
+		--Gmin: calc(var(--Gmino) * 1rem);
+		--Gmax: calc(var(--Gmaxo) * 1rem);
+
+		gap: clamp(
+			var(--Gmin),
+			calc(
+				calc(
+						calc((var(--Gmaxo) - var(--Gmino)) * 10) /
+							calc(var(--MQmaxo) - var(--MQmino))
+					) * calc(100vw - var(--MQmin)) + var(--Gmin)
+			),
+			var(--Gmax)
+		);
+		/**/
+		--FSmino: 2.4;
+		--FSmaxo: 3;
+		--FSmin: calc(var(--FSmino) * 1rem);
+		--FSmax: calc(var(--FSmaxo) * 1rem);
+
+		--prefClamp: clamp(
+			var(--FSmin),
+			calc(
+				calc(
+						calc((var(--FSmaxo) - var(--FSmino)) * 10) /
+							calc(var(--MQmaxo) - var(--MQmino))
+					) * calc(100vw - var(--MQmin)) + var(--FSmin)
+			),
+			var(--FSmax)
+		);
+
+		font-size: clamp(var(--Wmin), var(--prefClamp), var(--Wmax));
+	}
+
+	.home-about > * > :first-child,
+	.home-classes > :first-child {
+		font-size: clamp(4rem, calc((100vw - 768px) + 0rem), 4.4rem);
+
+		--FSmino: 4;
+		--FSmaxo: 4.4;
+		--FSmin: calc(var(--FSmino) * 1rem);
+		--FSmax: calc(var(--FSmaxo) * 1rem);
+
+		font-size: clamp(
+			var(--FSmin),
+			calc(
+				calc(
+						calc((var(--FSmaxo) - var(--FSmino)) * 10) /
+							calc(var(--MQmaxo) - var(--MQmino))
+					) * calc(100vw - var(--MQmin)) + var(--FSmin)
+			),
+			var(--FSmax)
+		);
+	}
+
+	.home-about > * > :last-child,
+	.home-classes > :last-child {
+		border-radius: 0.6rem;
+		padding: clamp(0.2rem, calc(0.0069 * (100vw - 768px) + 0.2rem), 0.4rem)
+			clamp(0.4rem, calc(0.0137 * (100vw - 768px) + 0.4rem), 0.8rem);
+
+		--PADmino: 0.2;
+		--PADmaxo: 0.4;
+		--PADmin: calc(var(--PADmino) * 1rem);
+		--PADmax: calc(var(--PADmaxo) * 1rem);
+		--prefClamp: calc(
+			calc(
+					calc((var(--PADmaxo) - var(--PADmino)) * 10) /
+						calc(var(--MQmaxo) - var(--MQmino))
+				) * calc(100vw - var(--MQmin)) + var(--PADmin)
+		);
+
+		padding: clamp(var(--PADmin), var(--prefClamp), var(--PADmax))
+			clamp(
+				calc(2 * var(--PADmin)),
+				calc(2 * var(--prefClamp)),
+				calc(2 * var(--PADmax))
+			);
+
+		/**/
+		font-size: clamp(2.4rem, calc((100vw - 768px) + 0rem), 3rem);
+
+		--FSmino: 2.4;
+		--FSmaxo: 3;
+		--FSmin: calc(var(--FSmino) * 1rem);
+		--FSmax: calc(var(--FSmaxo) * 1rem);
+
+		font-size: clamp(
+			var(--FSmin),
+			calc(
+				calc(
+						calc((var(--FSmaxo) - var(--FSmino)) * 10) /
+							calc(var(--MQmaxo) - var(--MQmino))
+					) * calc(100vw - var(--MQmin)) + var(--FSmin)
+			),
+			var(--FSmax)
+		);
+	}
+	/*
+	:root {
+		--prefClamp: calc(
+			calc(
+					calc(var(--Wmaxo) - var(--Wmino)) /
+						calc(var(--MQmaxo) - var(--MQmino))
+				) * calc(100vw - var(--MQmin)) + var(--Wmin)
+		);
+
+		--Wmino: 1200;
+		--Wmaxo: 1500;
+		--Wmin: calc(var(--Wmino) * 1px);
+		--Wmax: calc(var(--Wmaxo) * 1px);
+	}
+   this absolutelly does not work, maybe workaround with Rect component functions and params? But perhaps it is too much to do?
+   */
+
+	.home-container div:nth-child(2) img {
+		--Wmino: 250;
+		--Wmaxo: 300;
+		--Wmin: calc(var(--Wmino) * 1px);
+		--Wmax: calc(var(--Wmaxo) * 1px);
+		--prefClamp: calc(
+			calc(
+					calc(var(--Wmaxo) - var(--Wmino)) /
+						calc(var(--MQmaxo) - var(--MQmino))
+				) * calc(100vw - var(--MQmin)) + var(--Wmin)
+		);
+		width: clamp(var(--Wmin), var(--prefClamp), var(--Wmax));
+
+		display: block;
+	}
+
+	.home-container div:nth-child(2) {
+		display: flex;
+		align-items: start;
+	}
+
+	.home-container div:nth-child(3) {
+	}
+
+	.home-container div:nth-child(3) img {
+		width: clamp(320px, calc(0.3537 * (100vw - 1060px) + -460px), 460px);
+		/* to find all depricated code, ctrl+f "calc(0." */
+
+		--Wmino: 320;
+		--Wmaxo: 460;
+		--Wmin: calc(var(--Wmino) * 1px);
+		--Wmax: calc(var(--Wmaxo) * 1px);
+		--prefClamp: calc(
+			calc(
+					calc(var(--Wmaxo) - var(--Wmino)) /
+						calc(var(--MQmaxo) - var(--MQmino))
+				) * calc(100vw - var(--MQmin)) + var(--Wmin)
+		);
+		width: clamp(var(--Wmin), var(--prefClamp), var(--Wmax));
+	}
+
+	/*to have width of others be proper u need to fix the widest element
+   //OR change grid to aa bb cc and give it custom width
+   */
+
+	.home-cta-left,
+	.home-cta-right {
+		--width: clamp(320px, calc(0.2805 * (100vw - 1060px) + -420px), 420px);
+		/**/
+
+		--Wmino: 320;
+		--Wmaxo: 420;
+		--Wmin: calc(var(--Wmino) * 1px);
+		--Wmax: calc(var(--Wmaxo) * 1px);
+		--prefClamp: calc(
+			calc(
+					calc((var(--Wmaxo) - var(--Wmino))) /
+						calc(var(--MQmaxo) - var(--MQmino))
+				) * calc(100vw - var(--MQmin)) + var(--Wmin)
+		);
+		--width: clamp(var(--Wmin), var(--prefClamp), var(--Wmax));
+
+		width: var(--width);
+		height: calc(var(--width) + 50px);
+	}
+
+	.home-container {
+		--Wmino: 30;
+		--Wmaxo: 48;
+		--Wmin: calc(var(--Wmino) * 1px);
+		--Wmax: calc(var(--Wmaxo) * 1px);
+
+		--prefClamp: calc(
+			calc(
+					calc((var(--Wmaxo) - var(--Wmino))) /
+						calc(var(--MQmaxo) - var(--MQmino))
+				) * calc(100vw - var(--MQmin)) + var(--Wmin)
+		);
+		--cta-mar: clamp(var(--Wmin), var(--prefClamp), var(--Wmax)) 0;
+	}
+	/* |V||V| */
+	.home-cta-left {
+		margin: var(--cta-mar);
+	}
+	.home-cta-right {
+		margin: var(--cta-mar);
+	}
+	/* ------ */
+	.home-cta-left > p,
+	.home-cta-right > p,
+	.home-cta-right > a,
+	.home-cta-right > p > a {
+		font-size: clamp(4.4rem, calc(0.0378 * (100vw - 1060px) + -6rem), 6rem);
+
+		--FSmino: 4.4;
+		--FSmaxo: 6;
+		--FSmin: calc(var(--FSmino) * 1rem);
+		--FSmax: calc(var(--FSmaxo) * 1rem);
+
+		--prefClamp: clamp(
+			var(--FSmin),
+			calc(
+				calc(
+						calc((var(--FSmaxo) - var(--FSmino)) * 10) /
+							calc(var(--MQmaxo) - var(--MQmino))
+					) * calc(100vw - var(--MQmin)) + var(--FSmin)
+			),
+			var(--FSmax)
+		);
+
+		font-size: clamp(var(--FSmin), var(--prefClamp), var(--FSmax));
+	}
+
+	/*
+	.home-cta-right > p > a {
+		font-size: clamp(4.4rem, calc(0.0378 * (100vw - 1060px) + -6rem), 6rem);
+	}
+*/
+
+	.footer-container ul {
+		gap: 1rem;
+		font-size: 1.4rem;
+		padding: 2rem;
+
+		gap: 0.8rem;
+		font-size: 1.2rem;
+
+		padding: 2rem 0rem;
+	}
+	.footer-container ul:first-child {
+		padding-left: 2rem;
+	}
+}
+
+/*MOBILE query*/
+/*do SVH instead of vh*/
+@media (320px <= width <= 500px) and ((orientation: portrait)) {
+	:root {
+		--MQmino: 320;
+		--MQmin: calc(var(--MQmino) * 1px);
+		--MQmaxo: 500;
+	}
+
+	:root {
+		position: relative;
+	}
+
+	.nav-links {
+		position: fixed;
+		flex-direction: column;
+		right: 0;
+		top: 0;
+		margin: 0;
+		transform: translate(100%, 0);
+
+		z-index: 1000;
+
+		transition: ease-in-out 0.6s;
+
+		height: 100vh;
+		background-color: rgba(0, 0, 0, 0.9);
+
+		width: 33%;
+
+		gap: 32px;
+	}
+
+	.nav-links > * {
+		width: fit-content;
+		padding: 0 0;
+		margin: 0px 12px;
+		text-wrap: wrap;
+	}
+
+	.nav-links > *:last-child {
+		padding: 0.4rem 0.8rem;
+	}
+
+	.nav-links > *:first-child {
+		margin-top: 24px;
+	}
+
+	/**/ /**/
+	.hero-container {
+		position: relative;
+		grid-template-columns: 1fr;
+	}
+
+	.hero-img {
+		position: absolute;
+
+		z-index: -1;
 	}
 }
