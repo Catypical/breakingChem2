@@ -1,7 +1,7 @@
 /*
 LANDSCAPE QUERIES
 */
-@media (1536px < width) and ((orientation: landscape)) {
+@media (1536px < width) and (864px < height) and ((orientation: landscape)) {
 	.home-about > * > :is(div),
 	.home-classes > :is(div) {
 		max-width: 600px;
@@ -574,7 +574,7 @@ the only way to CONVERT UNITLESS units is to multiply them by the needed unit
 
 /*MOBILE query*/
 /*do SVH instead of vh*/
-@media (320px <= width <= 500px) and ((orientation: portrait)) {
+@media (320px <= width <= 500px) and (568px < height) and ((orientation: portrait)) {
 	:root {
 		--MQmino: 320;
 		--MQmin: calc(var(--MQmino) * 1px);
@@ -593,16 +593,44 @@ the only way to CONVERT UNITLESS units is to multiply them by the needed unit
 		margin: 0;
 		transform: translate(100%, 0);
 
-		z-index: 1000;
+		z-index: 1000000;
 
 		transition: ease-in-out 0.6s;
 
 		height: 100vh;
-		background-color: rgba(0, 0, 0, 0.9);
+		background-color: rgba(0, 0, 0, 1);
 
 		width: 33%;
 
 		gap: 32px;
+
+		border-left: 1px solid rgba(54, 148, 87, 0.8);
+	}
+
+	.nav-links::after {
+		content: "";
+
+		position: absolute;
+
+		width: 400%;
+		height: 100%;
+
+		z-index: 1000000;
+
+		backdrop-filter: blur(0.8px);
+		background-color: rgba(0, 0, 0, 0.2);
+		transition-property: background-color;
+		transition: 0.3s;
+
+		left: 0;
+		transform: translateX(-100%);
+
+		position: absolute;
+
+		display: var(--nav-links-A-display, none);
+		/* to negate this whole thing just change display property 
+      find this in the JS file and then just do it
+      */
 	}
 
 	.nav-links > * {
@@ -618,6 +646,41 @@ the only way to CONVERT UNITLESS units is to multiply them by the needed unit
 
 	.nav-links > *:first-child {
 		margin-top: 24px;
+	}
+
+	.root-menu {
+		display: inline-block;
+		align-self: center;
+		--d: 36px;
+		width: var(--d);
+		height: var(--d);
+
+		margin: 4px;
+
+		color: rgba(54, 148, 87, 0.8);
+		transition-property: color;
+		transition-duration: 0.4s;
+
+		background: none;
+
+		border: none;
+		padding: 0;
+		font: inherit;
+		cursor: pointer;
+		outline: inherit;
+	}
+
+	.root-menu:hover,
+	.root-menu:active {
+		cursor: pointer;
+		color: rgba(255, 235, 60, 0.9);
+	}
+	.root-menu svg {
+		width: 100%;
+		height: 100%;
+	}
+
+	.root-menu svg * {
 	}
 
 	/**/ /**/

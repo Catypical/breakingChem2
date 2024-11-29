@@ -6,7 +6,12 @@ import "../index.css";
 
 // ICONS
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faEnvelope, faGreaterThan } from "@fortawesome/free-solid-svg-icons";
+import {
+	faEnvelope,
+	faGreaterThan,
+	faBars,
+} from "@fortawesome/free-solid-svg-icons";
+
 import {
 	faTwitter,
 	faFacebook,

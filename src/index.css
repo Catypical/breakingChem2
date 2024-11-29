@@ -270,6 +270,11 @@ nav h1:not(:first-child) {
 	border-radius: 6px;
 }
 
+/*this is for whole thing*/
+.root-menu {
+	display: none;
+}
+
 /**************************/
 /* FOOTER */
 /**************************/
@@ -492,7 +497,7 @@ nav h1:not(:first-child) {
 }
 
 .hero-icons a svg {
-	font-size: clamp(28px, calc(0.0341 * (100vw - 11060px) + 28px), 60px);
+	font-size: clamp(28px, calc(0.0341 * (100vw - 1060px) + 28px), 60px);
 	padding: 0.4rem;
 	/*transition: 0.4s;*/
 	transition-property: border, background-color, color, box-shadow;
