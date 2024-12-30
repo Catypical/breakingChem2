@@ -82,14 +82,45 @@ export default function Home() {
 		console.log("22");
 	};
 
+	function getDevice() {
+		return `${window
+			.getComputedStyle(document.querySelectorAll(":root")[0])
+			.getPropertyValue("--device")}`;
+	} //|-> "phone"
+	console.log(getDevice());
+
+	function displayDevice(device) {
+		return getDevice() === `"${device}"`
+			? {
+					display: "flex",
+			  }
+			: {
+					display: "none",
+			  };
+	}
+	console.log(getDevice("phone"), getDevice()); //|-> "phone" "phone"
+	//issue appers if youre switching your device somehow when youre on pc to phone and vice versa, but that is impossible to do by normal usage of the webside
+	//you CAN make it RERENDER with useState w dependency being prob property of device from css
+
 	return (
 		<>
 			<div /*using localStorage for dynamic height*/
-				style={{
-					minHeight: `calc(100vh - ${
-						/*setNavH2(localStorage.getItem("navH"))*/ navH
-					}px + 1px)`,
-				}}
+				// // // // // // here get conditional value
+
+				/*basically you want your navH to be your variable that will change through the clamp based on min max width (320 - 500px)
+				 */
+				style={
+					getDevice() === "desktop"
+						? {
+								minHeight: `calc(100vh - ${
+									/*setNavH2(localStorage.getItem("navH"))*/ navH
+								}px + 1px)`,
+						  }
+						: {
+								//we are basically subtracting such that form our original values, we get 100% from lowest mq to 70% of highest MQ
+								minHeight: `calc( calc(100vh + calc((-100vh + 568px)) * (267 / 320))  - ${navH}px + 1px)`,
+						  }
+				}
 				className="hero-container"
 			>
 				<div className="hero-left">
@@ -131,6 +162,16 @@ export default function Home() {
 			<div className="home-container">
 				<div className="home-about">
 					<div className="about-container">
+						<div
+							style={displayDevice("phone")}
+							className="about-image"
+						>
+							<LazyLoadImage
+								src={Nobel1456ltw}
+								placeholderSrc={Nobel364}
+								effect="blur"
+							/>
+						</div>
 						<p>Quality</p>
 
 						<div>
@@ -212,17 +253,28 @@ export default function Home() {
 						</NavLink>
 					</div>
 				</div>
-				<div className="xdxdxd">
+				{
+					//you can instead have display: none  for duplicates of images
+					//after this youre adding reverse div as children of the paragraphs
+				}
+
+				<div style={displayDevice("desktop")} className="about-image">
 					<LazyLoadImage
 						src={Nobel1456ltw}
 						placeholderSrc={Nobel364}
 						effect="blur"
 					/>
 				</div>
-				<div>
+				<div style={displayDevice("desktop")} className="classes-image">
 					<LazyLoadImage src={ClassesImg} />
 				</div>
 				<div className="home-classes">
+					<div
+						style={displayDevice("phone")}
+						className="classes-image"
+					>
+						<LazyLoadImage src={ClassesImg} />
+					</div>
 					<p>And Practice</p>
 
 					<div>

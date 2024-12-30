@@ -2,6 +2,11 @@
 LANDSCAPE QUERIES
 */
 @media (1536px < width) and (864px < height) and ((orientation: landscape)) {
+	/*big desktop*/
+	:root {
+		--device: "desktop";
+	}
+
 	.home-about > * > :is(div),
 	.home-classes > :is(div) {
 		max-width: 600px;
@@ -109,7 +114,7 @@ width: clamp(
 	var(--Wmax)
 );
 //COPY THIS ^^^^^^
-^^^^^^^^^^^^^^^^^^ IF REM ΔW * 10 !!!!!
+^^^^^^^^^^^^^^^^^^ IF REM ΔW * 10 !!!!! bcs REM = px/10
 ^^^^^^^^^^^^^^^^^^ 
 dont do width if u dont need width of course, change width to whatever
 //finished the function
@@ -139,12 +144,15 @@ the only way to CONVERT UNITLESS units is to multiply them by the needed unit
 --Wmin: calc(200 * 1px); //|-> 200px; 
 */
 @media (768px <= width < 1060px) and ((orientation: landscape)) {
+	/*small desktop*/
 	/*Navigation bar*/
 
 	:root {
 		--MQmino: 768;
 		--MQmin: calc(var(--MQmino) * 1px);
 		--MQmaxo: 1060;
+
+		--device: "desktop";
 	}
 	nav div h1 {
 		font-size: clamp(2.4rem, calc(0.0021 * (100vw - 768px) + 2.4rem), 3rem);
@@ -456,7 +464,7 @@ the only way to CONVERT UNITLESS units is to multiply them by the needed unit
 
 	.home-container div:nth-child(2) {
 		display: flex;
-		align-items: start;
+		align-items: center;
 	}
 
 	.home-container div:nth-child(3) {
@@ -574,11 +582,15 @@ the only way to CONVERT UNITLESS units is to multiply them by the needed unit
 
 /*MOBILE query*/
 /*do SVH instead of vh*/
-@media (320px <= width <= 500px) and (568px < height) and ((orientation: portrait)) {
+@media (320px <= width <= 500px) and (900px > height) and ((orientation: portrait)) {
 	:root {
 		--MQmino: 320;
 		--MQmin: calc(var(--MQmino) * 1px);
 		--MQmaxo: 500;
+		--MQmax: calc(var(--MQmaxo) * 1px);
+
+		--device: "phone";
+		/*idea for having a named custom variable so that you can make conditions in JS due to height diff*/
 	}
 
 	:root {
@@ -607,27 +619,29 @@ the only way to CONVERT UNITLESS units is to multiply them by the needed unit
 		border-left: 1px solid rgba(54, 148, 87, 0.8);
 	}
 
-	.nav-links::after {
+	/*cant use after due to propagation, I have to use antother element so that different element can catch the event*/
+	.nav-links-filter {
 		content: "";
 
-		position: absolute;
+		position: fixed;
 
 		width: 400%;
-		height: 100%;
+		height: 110%;
 
-		z-index: 1000000;
+		z-index: 100;
 
 		backdrop-filter: blur(0.8px);
 		background-color: rgba(0, 0, 0, 0.2);
-		transition-property: background-color;
+
 		transition: 0.3s;
 
 		left: 0;
-		transform: translateX(-100%);
+		transform: translate(0, -10%);
 
-		position: absolute;
+		transition: visibility 0.6s, opacity 0.6s;
+		visibility: hidden;
+		opacity: 0;
 
-		display: var(--nav-links-A-display, none);
 		/* to negate this whole thing just change display property 
       find this in the JS file and then just do it
       */
@@ -684,14 +698,459 @@ the only way to CONVERT UNITLESS units is to multiply them by the needed unit
 	}
 
 	/**/ /**/
+	/**************
+   Hero section
+   ***************/
+
 	.hero-container {
+		--device: "phone";
+
 		position: relative;
 		grid-template-columns: 1fr;
+
+		--MQmino: 320;
+		--MQmin: calc(var(--MQmino) * 1px);
+		--MQmaxo: 500;
+		--VHmino: 888;
+		--VHmin: 888px;
+		--VHmaxo: 568;
+		--VHmax: 568px;
+		/* values set for the JS file for dynamic variable change */
+
+		transition: 0.4s;
+	}
+
+	.hero-container::after {
+		content: "";
+		width: 100%;
+		height: 100%;
+		position: absolute;
+		left: 0;
+		bottom: 0;
+		background-color: rgba(19, 19, 19, 0.5);
+		z-index: -1;
+		backdrop-filter: blur(2px);
 	}
 
 	.hero-img {
 		position: absolute;
+		align-self: center;
+		transform: translateX(0);
 
 		z-index: -1;
+		/* u need to add brother element for dimming in the absolutelly same way u did for the menu bar */
+
+		--IMGmino: 270;
+		--IMGmaxo: 300;
+		--IMGmin: calc(var(--IMGmino) * 1px);
+		--IMGmax: calc(var(--IMGmaxo) * 1px);
+		--prefClamp: clamp(
+			var(--IMGmin),
+			calc(
+				calc(
+						calc((var(--IMGmaxo) - var(--IMGmino)) * 1) /
+							calc(var(--MQmaxo) - var(--MQmino))
+					) * calc(100vw - var(--MQmin)) + var(--IMGmin)
+			),
+			var(--IMGmax)
+		);
+
+		width: clamp(var(--IMGmin), var(--prefClamp), var(--IMGmax));
 	}
+
+	.hero-img::before {
+		content: "";
+		position: absolute;
+
+		background-color: rgba(5, 5, 5, 0.5);
+		border-radius: 30px;
+		z-index: 0;
+		height: 100%;
+		width: 100%;
+	}
+
+	.hero-left {
+		--GAPmino: 20;
+		--GAPmaxo: 48;
+		--GAPmin: calc(var(--GAPmino) * 1px);
+		--GAPmax: calc(var(--GAPmaxo) * 1px);
+		--prefClamp: calc(
+			calc(
+					calc((var(--GAPmaxo) - var(--GAPmino)) * 1) /
+						calc(var(--MQmaxo) - var(--MQmino))
+				) * calc(100vw - var(--MQmin)) + var(--GAPmin)
+		);
+
+		gap: clamp(var(--GAPmin), var(--prefClamp), var(--GAPmax));
+	}
+
+	.hero-main-text {
+		--FSmino: 3.2;
+		--FSmaxo: 4;
+		--FSmin: calc(var(--FSmino) * 1rem);
+		--FSmax: calc(var(--FSmaxo) * 1rem);
+		--prefClamp: clamp(
+			var(--FSmin),
+			calc(
+				calc(
+						calc((var(--FSmaxo) - var(--FSmino)) * 10) /
+							calc(var(--MQmaxo) - var(--MQmino))
+					) * calc(100vw - var(--MQmin)) + var(--FSmin)
+			),
+			var(--FSmax)
+		);
+
+		font-size: clamp(var(--FSmin), var(--prefClamp), var(--FSmax));
+	}
+
+	.hero-text {
+		--FSmino: 2.4;
+		--FSmaxo: 3.2;
+		--FSmin: calc(var(--FSmino) * 1rem);
+		--FSmax: calc(var(--FSmaxo) * 1rem);
+		--prefClamp: clamp(
+			var(--FSmin),
+			calc(
+				calc(
+						calc((var(--FSmaxo) - var(--FSmino)) * 10) /
+							calc(var(--MQmaxo) - var(--MQmino))
+					) * calc(100vw - var(--MQmin)) + var(--FSmin)
+			),
+			var(--FSmax)
+		);
+
+		font-size: clamp(var(--FSmin), var(--prefClamp), var(--FSmax));
+
+		gap: 16px;
+	}
+
+	.hero-cta {
+		flex-wrap: wrap-reverse;
+
+		justify-content: start;
+
+		--GAPmino: 16;
+		--GAPmaxo: 20;
+		--GAPmin: calc(var(--GAPmino) * 1px);
+		--GAPmax: calc(var(--GAPmaxo) * 1px);
+		--prefClamp: calc(
+			calc(
+					calc((var(--GAPmaxo) - var(--GAPmino)) * 1) /
+						calc(var(--MQmaxo) - var(--MQmino))
+				) * calc(100vw - var(--MQmin)) + var(--GAPmin)
+		);
+
+		gap: clamp(var(--GAPmin), var(--prefClamp), var(--GAPmax));
+
+		margin-right: 0.6px;
+	}
+
+	.hero-icons {
+		--FSmino: 22;
+		--FSmaxo: 28;
+		--FSmin: calc(var(--FSmino) * 1px);
+		--FSmax: calc(var(--FSmaxo) * 1px);
+		--prefClamp: calc(
+			calc(
+					calc((var(--FSmaxo) - var(--FSmino)) * 1) /
+						calc(var(--MQmaxo) - var(--MQmino))
+				) * calc(100vw - var(--MQmin)) + var(--FSmin)
+		);
+
+		font-size: clamp(var(--FSmin), var(--prefClamp), var(--FSmax));
+
+		--GAPmino: 7;
+		--GAPmaxo: 8;
+		--GAPmin: calc(var(--GAPmino) * 1px);
+		--GAPmax: calc(var(--GAPmaxo) * 1px);
+		--prefClamp: calc(
+			calc(
+					calc((var(--GAPmaxo) - var(--GAPmino)) * 1) /
+						calc(var(--MQmaxo) - var(--MQmino))
+				) * calc(100vw - var(--MQmin)) + var(--GAPmin)
+		);
+
+		gap: clamp(var(--GAPmin), var(--prefClamp), var(--GAPmax));
+	}
+
+	.hero-icons a {
+		margin: 4px 8px 4px 0;
+	}
+
+	.hero-icons a svg {
+		--FSmino: 24;
+		--FSmaxo: 28;
+		--FSmin: calc(var(--FSmino) * 1px);
+		--FSmax: calc(var(--FSmaxo) * 1px);
+		--prefClamp: calc(
+			calc(
+					calc((var(--FSmaxo) - var(--FSmino)) * 1) /
+						calc(var(--MQmaxo) - var(--MQmino))
+				) * calc(100vw - var(--MQmin)) + var(--FSmin)
+		);
+		font-size: clamp(var(--FSmin), var(--prefClamp), var(--FSmax));
+	}
+
+	/******************/
+	/*After Home*/
+	/******************/
+	/*
+   Make home container flex 1 item 
+   */
+
+	/*i dont get why this persists over every size, go check in browser*/
+	.home-container {
+		grid-template-columns: minmax(0, 1fr);
+	}
+
+	.about-container {
+		position: relative;
+		justify-content: center;
+	}
+
+	.home-about {
+		backdrop-filter: blur(20px);
+	}
+	.home-about svg,
+	.home-classes svg {
+		/* 19 24 bcs so translate is same*/
+
+		--Hmino: 19;
+		--Hmaxo: 24;
+		--Hmin: calc(var(--Hmino) * 1px);
+		--Hmax: calc(var(--Hmaxo) * 1px);
+		--prefClamp: calc(
+			calc(
+					calc((var(--Hmaxo) - var(--Hmino)) * 1) /
+						calc(var(--MQmaxo) - var(--MQmino))
+				) * calc(100vw - var(--MQmin)) + var(--Hmin)
+		);
+		height: clamp(var(--Hmin), var(--prefClamp), var(--Hmax));
+
+		transform: translateY(2px);
+	}
+
+	.about-image {
+		z-index: -1;
+		position: absolute;
+
+		--Wmino: 210;
+		--Wmaxo: 275;
+		--Wmin: calc(var(--Wmino) * 1px);
+		--Wmax: calc(var(--Wmaxo) * 1px);
+		--prefClamp: calc(
+			calc(
+					calc((var(--Wmaxo) - var(--Wmino)) * 1) /
+						calc(var(--MQmaxo) - var(--MQmino))
+				) * calc(100vw - var(--MQmin)) + var(--Wmin)
+		);
+		width: clamp(var(--Wmin), var(--prefClamp), var(--Wmax));
+
+		align-self: center;
+	}
+
+	.about-image * {
+		border-radius: 30px;
+		box-shadow: 3px 5px 20px rgba(0, 0, 0, 0.8),
+			-3px -5px 20px rgba(50, 50, 50, 0.4);
+	}
+	.about-image::before {
+		content: "";
+		position: absolute;
+
+		background-color: rgba(5, 5, 5, 0.8);
+		border-radius: 30px;
+		z-index: 0;
+		height: 100%;
+		width: 100%;
+	}
+	/*this shouldnt be about-con -> home-about*/
+	.home-about::after {
+		content: "";
+		width: 100%;
+		height: 100%;
+		position: absolute;
+		left: 0;
+		bottom: 0;
+
+		z-index: -1;
+		backdrop-filter: blur(3px);
+	}
+
+	.home-classes {
+		position: relative;
+	}
+	.classes-image {
+		z-index: -1;
+		position: absolute;
+		height: 50%; /*fix this garbage dont use %*/
+		--Wmino: 240;
+		--Wmaxo: 300;
+		--Wmin: calc(var(--Wmino) * 1px);
+		--Wmax: calc(var(--Wmaxo) * 1px);
+		--prefClamp: calc(
+			calc(
+					calc((var(--Wmaxo) - var(--Wmino)) * 1) /
+						calc(var(--MQmaxo) - var(--MQmino))
+				) * calc(100vw - var(--MQmin)) + var(--Wmin)
+		);
+		width: clamp(var(--Wmin), var(--prefClamp), var(--Wmax));
+
+		align-self: center;
+	}
+
+	.classes-image * {
+		border-radius: 30px;
+		box-shadow: 3px 5px 20px rgba(0, 0, 0, 0.8),
+			-3px -5px 20px rgba(50, 50, 50, 0.4);
+	}
+	.classes-image::before {
+		content: "";
+		position: absolute;
+
+		background-color: rgba(5, 5, 5, 0.8);
+		border-radius: 30px;
+		z-index: 0;
+		height: 100%;
+		width: 100%;
+	}
+
+	.home-classes::after {
+		content: "";
+		width: 100%;
+		height: 100%;
+		position: absolute;
+		left: 0;
+		bottom: 0;
+
+		z-index: -1;
+		backdrop-filter: blur(2px);
+	}
+
+	.home-container {
+		width: 100%;
+	}
+	.home-about,
+	.home-classes {
+		min-width: auto;
+		min-height: auto;
+
+		--FSmino: 2;
+		--FSmaxo: 2.7;
+		--FSmin: calc(var(--FSmino) * 1rem);
+		--FSmax: calc(var(--FSmaxo) * 1rem);
+		--prefClamp: calc(
+			calc(
+					calc((var(--FSmaxo) - var(--FSmino)) * 10) /
+						calc(var(--MQmaxo) - var(--MQmino))
+				) * calc(100vw - var(--MQmin)) + var(--FSmin)
+		);
+		font-size: clamp(var(--FSmin), var(--prefClamp), var(--FSmax));
+
+		padding: 32px 24px 24px 24px;
+
+		--PADmino: 32;
+		--PADmaxo: 48;
+		--PADmin: calc(var(--PADmino) * 1px);
+		--PADmax: calc(var(--PADmaxo) * 1px);
+		--prefClampPAD: calc(
+			calc(
+					calc((var(--PADmaxo) - var(--PADmino)) * 1) /
+						calc(var(--MQmaxo) - var(--MQmino))
+				) * calc(100vw - var(--MQmin)) + var(--PADmin)
+		);
+		--prefValuePAD: clamp(
+			var(--PADmin),
+			var(--prefClampPAD),
+			var(--PADmax)
+		);
+
+		padding: var(--prefValuePAD) 24px var(--prefValuePAD) 24px;
+	}
+	/*height: 60%; change this in classes-image
+   48 -> 32 padding on the below hero 
+   */
+
+	/*implement the font size formula*/
+	.home-about > * > :is(p),
+	.home-classes > :is(p) {
+		--FSmino: 3.2;
+		--FSmaxo: 4.4;
+		--FSmin: calc(var(--FSmino) * 1rem);
+		--FSmax: calc(var(--FSmaxo) * 1rem);
+		--prefClamp: calc(
+			calc(
+					calc((var(--FSmaxo) - var(--FSmino)) * 10) /
+						calc(var(--MQmaxo) - var(--MQmino))
+				) * calc(100vw - var(--MQmin)) + var(--FSmin)
+		);
+
+		font-size: clamp(var(--FSmin), var(--prefClamp), var(--FSmax));
+	}
+
+	.home-about > * > :last-child,
+	.home-classes > :last-child {
+		padding: 0.2rem 0.4rem;
+		margin: 0.2rem 0;
+	}
+
+	/*************/
+	/*CtA section*/
+	/*************/
+
+	.home-cta-left,
+	.home-cta-right {
+		justify-self: center;
+		margin: 0;
+
+		border-radius: unset;
+		margin: 20px;
+	}
+	.home-cta-right {
+		margin-top: 0px;
+	}
+
+	.border-left,
+	.border-right {
+		width: calc(100% + 2px);
+		left: -1px;
+	}
+
+	.home-cta-left {
+	}
+}
+
+ {
+	/*
+   .home-about > * > :is(p), .home-classes > :is(p) -> 4.4rem
+
+   .home-about, .home-classes {
+  font-size: 3rem;
+
+
+  button 
+  .home-about > * > :last-child, .home-classes > :last-child
+  font-weight: 500;
+  padding: 0.4rem 0.8rem;
+  margin: 1.2rem 0;
+   
+
+
+  u can on mouse over make elements have 
+  		background-color: hsla(140, 15%, 50%, 0.1);
+      it looks cooool
+
+
+   	.hero-container:hover {
+		background-color: hsla(140, 25%, 50%, 0.05);
+	}
+
+   but prob do it for pc later bcs phones dont hover much
+
+
+   add on desktop when you scroll into view so that area lits on dim green color shown above, it would look very nice
+   also what can be added are parhaps some pipets or whatever but could be cluttering 
+
+   for the PHONE you could just make second image in the background and blur it additionally so it can be like yt video ambience, you gotta stretch it so it encompasses whole width of the screen'
+   */
 }

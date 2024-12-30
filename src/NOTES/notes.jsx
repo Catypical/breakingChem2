@@ -1,0 +1,762 @@
+//Here are React notes, refer to these if anything in React JSX syntax is unclear
+//dont forget to enclose everything in the comment for your app 
+
+
+// 00000000000
+/* onClick */ 
+// 00000000000
+
+/////////onClick parameters + conditions
+//App
+import { Component } from "react";
+import Button from "./Button.jsx"
+function App() {
+    return(<Button />);
+}
+export default App;
+
+
+//Button
+function Button(){
+   const handleClick = () => console.log("CLICKED ME!")
+   const handleClick2 = (name) => console.log(`${name} stop clicking ME`)
+
+   const handleClick3 = (name) => {
+      if(p < 3){
+         p++;
+         console.log(`${name} clicked me ${p} times`)}
+         else{
+            console.log(`${name} stop clicking ME`)
+         }
+      
+   }
+
+
+    return(
+      <>
+      <button onClick={handleClick}>Click ME</button>
+      <button onClick={handleClick2("User")}>Click ME</button>
+      {/*when you have f() or f(..) it will be invoked immediatelly when it is rendered
+      //INSTEAD  () => f() */}
+      <button onClick={() => handleClick2("User")}>Click ME</button>
+
+      <button onClick={() => handleClick3("User")}>Click ME</button>
+      </>
+    );
+}
+export default Button;
+
+
+//
+/////////onClick events
+//App
+import Button from "./Button.jsx"
+import ProfilePicture from "./ProfilePicture.jsx"
+function App() {
+    return(<><Button /><ProfilePicture/></>);
+}
+export default App;
+
+
+//ProfilePicture  ..componends (ofc) cant share variables
+function ProfilePicture(){
+   const imageUrl = "../photos/image.jpeg";
+   const handleClick = () => console.log("CLICKED from ProfPic");
+   const handleClick2 = (e) => e.target.style.display = "none"; //makes img gone onClick
+
+
+   return(<>
+      <img onClick={handleClick} src={imageUrl}></img>
+      <img onClick={(e) => handleClick2(e)} src={imageUrl}></img>
+      
+      {/*same as onClick={handleClick*/}
+   </>   
+   )
+}
+export default ProfilePicture;
+
+//Button
+function Button(){
+  
+   const handleClick = (e) => console.log(e);
+   const handleClick2 = (e) => e.target.textContent = "DO NOT click ME!";
+
+
+    return(<>
+    <button onClick={(e) => handleClick2(e)}>Click ME</button>
+    {/*because event is first e as paraneter and it gets to be argunebt in our handler handleClick(..)
+    
+    there is also onDoubleClick
+    */}
+    </>);
+}
+export default Button;
+/////////////////////////////////////
+
+
+// 00000000000
+/* useState() hook */ 
+// 00000000000
+//hook = special f(), allows functional components to use React features without class components (useState Effect Context Reducer...)
+
+// useState() = creates stateful variable AND a setter function to update the value in DOM  [name, setName]
+
+//App
+import MyComponent form "./MyComponent.jsx"
+function App() {
+   return(<></>);
+}
+export default App
+
+//Component
+import React, {useState} from "react"
+function MyComponent(){
+   //inately useState returns arr with var and setter, we are DESTRUCTURING it. and it has initial state
+   const [name, setName] = useState("Guest");
+   const [age, setAge] = useState(0);
+   // setter setValue is a PARAMETER reciever, you just interact with value how you want to change it
+   const [isEmployed, setIsEmployed] = useState(false);
+
+   const updateName = () => {
+      setName("Abc");
+   }
+
+   const incrementAge = () => {
+      setAge(age + 1)
+   }
+
+   const toggleEmployed = () => {
+      setIsEmployed(!isEmployed)
+   }
+
+   return(<>
+      <div>
+         <p>Name: {name}</p>
+         <button onClick={updateName}>Set Name</button>
+
+         <p>Age: {age}</p>
+         <button onClick={incrementAge}>Increment Age</button>
+      </div>
+
+      <p>Is employed: {isEmployed ? "yes" : "no"}</p>
+         <button onClick={toggleEmployed}>Toggle status</button>
+   
+   </>)
+}
+export default MyComponent;
+
+
+//
+/////////useState() counter program
+
+//App
+import Counter from "./MyComponent.jsx"
+function App() {
+   return(<><Counter/></>);
+}
+export default App
+
+//Component
+import React,{useState} from "react";
+function Counter(){
+   const [count, setCount] = useState(0);
+   const increment = () => {
+      setCount(count + 1);
+   }
+   const decrement = () => {
+      setCount(count - 1);
+   }
+   const reset = () => {setCount(0);}
+
+   return(
+      <div className="counter-container">
+         <p className="count-display">{count}</p>
+         <button className="counter-button" onClick={decrement}>Decrement</button>
+         <button className="counter-button" onClick={reset}>Reset</button>
+         <button className="counter-button" onClick={increment}>Increment</button>
+      </div>
+   )
+
+}
+export default Counter
+/////////////////////////////////////
+
+
+// 00000000000
+/* onChange() hook */ 
+// 00000000000
+//usually used with input elements <input> textare select radio
+// TECHNICALLY we could just JSX change the value of input by >{}</ but we just use value tag
+//onChange() triggers every tinme value of input changes
+
+//App
+
+//Component
+import React, {useState} from "react"
+import { faShippingFast } from "@fortawesome/free-solid-svg-icons";
+
+function MyComponent(){
+   const [name,setName] = useState("");
+   const [quant, setQuant] = useState(1);
+   const [comment, setComent] = useState("");
+   const [payment, setPayment] = useState("");
+   const [shipping, setShipping] = useState("");
+
+   function handleNameChange(e){
+      setName(e.target.value);
+   }
+   function handleQuantChange(e){
+      setQuant(e.target.value);
+   }
+   function handleCommentChange(e){
+      setComment(e.target.value)
+   }
+   function handlePaymentChange(e){
+      setPayment(e.target.value);
+   }
+   function handleShippingChange(e){
+      setShipping(e.target.value);
+   }
+   
+
+   return(<div>
+      <input value={name} onChange={handleNameChange} type="number"/>
+      <p>Name: {name}</p>
+      {//basically we have input that uses state which gets updated onChange and put in <p>
+      }
+      <input value={quant} onChange={handleQuantChange}/>
+      {
+      //i think that these 2 are the same thing
+      }
+      <input value={quant} onChange={(e) => setQuant(e.target.value)} type="number"/>
+      <p>Quantity: {quant}</p>
+
+
+      <textarea  value={comment} onChange={handleCommentChange} placeholder="Enter instructions"/>
+      <p>Comment: {comment}</p>
+
+      <select value={payment} onChange={handlePaymentChange}>
+         <option value={""}>Select an option:</option>
+         <option value={"Visa"}>Visa</option>
+         <option value={"Mastercard"}>Mastercard</option>
+         <option value={"Giftcard"}>Giftcard</option>
+      </select>
+      <p>Payment: {payment}</p>
+
+
+      <label>
+         <input type="radio" value="Pick up" checked={shipping === "Pick up"} onChange={handleShippingChange}/>
+         Pick up
+      </label><br/>
+      <label>
+         <input type="radio" value="Delivery" checked={shipping === "Delivery"} onChange={handleShippingChange}/>
+         Delivery
+      </label>
+      <p>Shipping: {shipping}</p>
+      
+   </div>
+   
+   );
+   
+}
+export default MyComponent
+/////////////////////////////////////
+
+
+// 00000000000
+// PRACTICE color picker  
+// 00000000000
+
+// App
+import ColorPicker from "./ColorPicker.jsx";
+function App(){
+   return(<><ColorPicker/></>)
+}
+export default App
+
+
+// Component
+import React, {useState} from "react";
+function ColorPicker(){
+   const [color, setColor] = useState("");
+
+   function handleColorChange(e){
+      setColor(e.target.value);
+   }
+   return(<div className="color-picker-container">
+      <h1>Color Picker</h1>
+      <div className="color-display" style={{backgroundColor: color}}>
+         <p>Selected color: {color}</p>
+      </div>
+      <label>Select a color:</label>
+      <input type="color" value={color} onChange={handleColorChange}></input>
+   </div>);
+}
+export default ColorPicker
+/////////////////////////////////////
+
+
+// 00000000000
+// React UPDATER functions  
+// 00000000000
+// updater function - f() passed as arg to setState() const [p, setP] = useState(); where> setP(f(p))
+// f(p) can be whatever, as in p+1 or another function(), if proper reutrn() value is bestowed to p (p is set)
+//safe updates based on previous state
+//used w multiple state updates and async fs
+//App
+
+//UPDATING NOTICE for setP( .p. ) if you STACK setP (inside of a function) it wont render multiple times, the render happens when the function is parsed through
+//its like hitting refresh page multiple times, only one command is sent actually 
+// UPDATING NOTICE setP( .p. ) stacking is solved by changing  .p.  to  prevP => .prevP.  b
+
+// updater function is put in a queue
+// during the next render, it will call them in the same order
+import Counter from "./MyComponent.jsx"
+function App() {
+   return(<><Counter/></>);
+}
+export default App
+
+//Component
+import React,{useState} from "react";
+function Counter(){
+   const [count, setCount] = useState(0);
+   const increment = () => {
+      setCount(count + 1);
+      setCount(count + 1);
+      setCount(count + 1);
+      //does not work
+      setCount(prevCount => prevCount + 1);
+      setCount(prevCount => prevCount + 1);
+      setCount(prevCount => prevCount + 1);
+      //does work
+      //using seperate parameter represents the PREVIOUS state, not the current one
+      //takes the PENDING state, !current one, to calculate NEXT state
+      //this is updated f and is put in queue
+      /// the output of this f is just gonna be what count becomes, as in if p of setP relies on setP return(), so basically, setCount(.p.) as immediate value and when p is updated to be .p., therefore setCount(a => .a.) returns .a. and then our p is updated to be .a.
+      ///  by this therefore (!mechanics) .a. = .p.
+   }
+   const decrement = () => {
+      setCount(c => c - 1);
+      setCount(c => c - 1);
+      setCount(c => c - 1);
+   }
+   const reset = () => {setCount(0);}
+
+   return(
+      <div className="counter-container">
+         <p className="count-display">{count}</p>
+         <button className="counter-button" onClick={decrement}>Decrement</button>
+         <button className="counter-button" onClick={reset}>Reset</button>
+         <button className="counter-button" onClick={increment}>Increment</button>
+      </div>
+   )
+
+}
+export default Counter
+//conclusion => this is the SAME syntaxically as regular set state in the way that we are operating on the parameter p of setP, BUT we are using another parameter which will be affected, at the END of function parsing new parameter value is given to our p of setP
+
+/////////////////////////////////////
+
+
+// 00000000000
+// Updating OBJ in useState
+// 00000000000
+//App
+
+
+//Component
+import React, {useState} from "react";
+function MyComponent(){
+   const [car, setCar] = useState({year:2024, make: "Ford", model:"Mustang"});
+
+   function handleYearChange(e){
+      //setCar(e.target.value);  cant do this bcs its object u are interacting w
+      setCar({...car, year: e.target.value});
+      setCar(prevCar => ({...prevCar, year: e.target.value}))
+      //this is the same as updater functions, only difference is that our p is obj so we have ot work around it, so instead of prevP => .prevP.
+      // -- prevP => ({...prevP, .prevP.})
+      
+   }
+   function handleMakeChange(e){
+      setCar(prevCar => ({...prevCar, make: e.target.value}))
+   }
+   function handleModelChange(e){
+      setCar(prevCar => ({...prevCar, model: e.target.value}))
+   }
+   
+   return(<div>
+      <p>Your fav car is: {car.year} {car.make} {car.model}</p>
+      <input type="number" value={car.year} onChange={handleYearChange}/><br/>
+      <input type="text" value={car.make} onChange={handleMakeChange}/><br/>
+      <input type="text" value={car.model} onChange={handleModelChange}/><br/>
+   </div>);
+}
+
+
+
+
+/////////////////////////////////////
+
+
+// 00000000000
+// Updating ARR in useState
+// 00000000000
+//App
+
+//Component
+import React, {useState} from "react"
+function MyComponent() {
+   const [foods, setFoods] = useState([]);
+   function handleAddFood(e){
+      const newFood = document.querySelector(".foodInput").value;
+      document.querySelector(".foodInput").value = "";
+
+      setFoods(prevFoods => ([...prevFoods, newFood]))
+   }
+
+   function handleRemoveFood(i){
+      //   this i is how parameter (index) will behave when invoked
+      setFoods(foods.filter((_, arri) => arri !== i));
+      //end of chain, basically arrays inately have their inexes which filter provides as 2nd p or argm, what we are doing is saying that when hRF(i) (with i being index of map) is invoked, filter all items beside one whose filter index is same as invoked one by onClick
+   }
+
+   return(<div>
+      <h2>List of Foods</h2>
+      <ul>
+         {foods.map((p, index) => <li key={index} onClick={() => handleRemoveFood(index)}
+         //   here it is being invoked
+         >{p}</li>)
+         ///!!! explanation needed, hRF() works w no key, I imagine that every <li> gets its own property being  index: number  when mapping so we can recall it
+         }
+      </ul>
+      <input type="text" className="foodInput" placeholder="Ender food name"/>
+      <button onClick={handleAddFood}>Add food</button>
+      <button>Add food</button>
+
+   </div>);
+}
+export default MyComponent;
+/////////////////////////////////////
+
+
+// 00000000000
+// Updating ARR of OBJ in useState
+// 00000000000
+//App
+
+
+///!!! SPREAD ... can be used with {} and [], if used on array of course you will have to make another array becasue u are spreading it
+///!!! SPREAD ... same goes with {}, if ...{.x.} then u gotta have obj enclosed in {} because we cant destroy OBJs
+//Component
+import React, {useState} from "react";
+function MyComponent(){
+   const [cars, setCars] = useState([]);
+   const [carYear, setCarYear] = useState(new Date().getFullYear());
+   const [carMake, setCarMake] = useState("");
+   const [carModel, setCarModel] = useState("");
+
+   function handleAddCar(){
+      const newCar = {
+         year: carYear,
+         make: carMake,
+         model: carModel,
+      };
+
+      setCars(prevCars => [...prevCars, newCar])
+      //by my conclusion, this just changes purely whole obj at once, because prevCars is the state array that would be containing and obj
+      //while our newCar is the whole new obj
+      // then [?, {..}] is just going back to [.y.] therefore you will have to have [{x}, {..}] that will set cars to the [.y.] which would be in useState
+
+      //// bruh.. youre just gonna have two of them because u deconstructured array so you can expand it with additional object and therefore u will have 2 obj values...............
+      
+      //reseting back values after setting
+      setCarYear(new Date().getFullYear());
+      setCarMake("");
+      setCarModel("");
+      //this does not affect the newCar from handleAdd, beacuse the main big ARR w OBJs setter is updated before the values of keys changes
+      // then, because its new setter trigger, our handleXChange triggers in response, and then the value (e.taget.value) is updated accordingly
+      ///  this f() handleAddCar only triggers when the button is pressed (it WOULD be funny if we just did default values as input, but still it would not change the ARR that would just grow)
+   }
+   function handleRemoveCar(index){
+      setCars(prevCars => prevCars.filter((_elem, i) => index !== i));
+      //basically, we have the li which contains an obj form the useState([]) and we are parsing objects in ARR, current obj key is in li key={i} provided by parsing w map the useState([])
+      // then we are onClick updating the useState([]) with filter method bcs ARR i, our i from filter should align with our i from map that has already been set, it gets the map i as argument and we are setting up by filter parsing for our filter i to be matching for useState reiteration
+   }
+   function handleYearChange(e){
+      setCarYear(e.target.value);
+   }
+   function handleMakeChange(e){
+      setCarMake(e.target.value);
+
+   }
+   function handleModelChange(e){
+      setCarModel(e.target.value);
+   }
+
+   return(<div>
+      <h2>List of car objs</h2>
+      <ul>
+         {cars.map((p, i) =>
+         //handleRemoveCar here invokes with num i as parameter, and we decide in out function what happens with it i
+         <li key={i} onClick={() => handleRemoveCar(i)}>
+            {p.year} {p.make} {p.model} 
+         </li>)}
+         {//FINALLY GOT IT, basically what is happening, representation of final useState([value]): [0] -> [ ...[0], {1} ] -> [ ...[{1}], {2} ] -> [ [ ...[{1}, {2}], {3} ] ->..
+         // basically, we are having the empty state, then its setState (setP) so that our original arr of state ([..]) is deconstructed so that we can setState such deconstructed ARR is encompased by the new member which appends itself to the old state
+         //  in simple, we are just adding new objects to the ARR state so that we can render them with state of setState by using state.map because state is ARR
+         }
+
+      </ul>
+      
+
+      <input type="number" value={carYear} onChange={handleYearChange}/><br/>
+      <input type="text" value={carMake} onChange={handleMakeChange} placeholder="Enter car make"/><br/>
+      <input type="text" value={carModel} onChange={handleModelChange} placeholder="Enter car model"/><br/>
+      <button onClick={handleAddCar}>Add Car</button>
+   </div>);
+}
+// 00000000000 useEffect(f(p), [dependencies])
+// useEffect() hook tells React to DO CODE when component:
+//:   > re-renders - useEffect(() => {})
+//:   > mounts only - useEffect(() => {}, [])
+//:   > value change - useEffect(() => {}, [value])
+
+//USES: event listeners, DOM manipulation, subscriptions (real-time updates), fetch data from API, celanup after dismount
+// 00000000000
+//App
+//Component
+import React, {useState, useEffect} from "react"
+function MyComponent() {
+   const [count, setCount] = useState(0);
+   const [color, setColor] = useState("green")
+   useEffect(() => {
+      document.title = `Count: ${count} ${color}`
+   })
+   //1 , /[] -> updated every time because our component is rerendering due to value of count changing
+   ///1  updates our title whenever DOM chanes (color and value) whcih matches color in <p>
+
+   //2 , [] -> runs only on initial mount so our title will be initial value of useState (0)
+   ///2  title is only initial while color in <p> is changed
+   //3 , [count] -> same because we are using count
+   ///3 updates to be the same as <p> depending when on what is in our dependency
+   ////3 example if our dependency is [count] then if we change color our title wont be changed while our <p> color changes,   [count, color] makes both change
+
+
+
+   function addCount() {
+      setCount( prevC => prevC + 1);
+   }  
+   function subtractCount() {
+      setCount( prevC => prevC - 1);
+   }  
+   function changeColor() {
+      setColor( prevColor => prevColor==="green" ? "red" : "green");
+   }
+
+
+   return(<>
+      <p style={{color: color}}>Count: {count}</p>
+      <button onClick={addCount}>Add</button>
+      <button onClick={subtractCount}>Subtract</button><br/>
+      <button onClick={changeColor}>Change Color</button>
+
+   </>);
+}
+export default MyComponent;
+
+//next example with cleanup
+//App
+//Component
+import React, {useState, useEffect} from "react"
+function MyComponent() {
+   const [width, setWidth] = useState(window.innerWidth);
+   const [height, setHeight] = useState(window.innerHeight);
+
+   
+   // window.addEventListener("resize", handleResize);
+   /// issue with this is that on every instance we will rack up a bunch of event listeners, idealy we want to do it only once when component mounts 
+   useEffect(() => {
+      window.addEventListener("resize", handleResize);
+
+      //return works BEFORE next re-render (if no dependancies) or on DISMOUNT
+      return () => {
+         window.removeEventListener("resize", handleResize)
+      }
+      }, []);
+      useEffect(() => {
+         document.title = `Size: ${width} x ${height}`;
+      }, [width, height]
+      )
+      //on mount we get the initial size and then we have size updated whenever a change occurs
+
+   function handleResize(){
+      setWidth(window.innerWidth);
+      setHeight(window.innerHeight);
+   }
+
+   return(<>
+      <p>Window Width: {width}px</p>
+      <p>Window HGight: {height}px</p>
+   </>)
+
+
+}
+export default MyComponent
+
+
+// 00000000000 
+// useContext()  - sharing values between multiple levels of components w/o passing props through each level
+// 00000000000
+//we want to avoid prop drilling, what it is is indicated with /*/.. */
+
+
+//App
+import ComponentA from "./ComponentA.jsx"
+function App() {
+   return(<ComponentA/>)
+}
+
+//ComponentA
+import React, {useState, useContext} from "react"
+import ComponentB from ".ComponentB.jsx"
+
+export const UserContext = createContext();
+function ComponentA() {
+   const [user, setUser] = useState("guest");
+   return(
+      <div className="box">
+         <h1>ComponentA</h1>
+         <h2>{`Hello ${user}`}</h2>
+         <UserContext.Provider value={user}>
+            <ComponentB /*/user={user}*//>
+         </UserContext.Provider>
+      </div>
+   )
+
+}
+export default ComponentA
+
+//ComponentB
+import ComponentC from ".ComponentC.jsx"
+function ComponentB(/*/props*/) {
+   return(
+      <div className="box">
+         <h1>ComponentB</h1>
+         <ComponentC /*/user={props.user}*//>
+      </div>
+   )
+
+}
+export default ComponentB
+
+//ComponentC
+import React, {useContext} from "react";
+import {UserContext} from "./ComponentA.jsx"
+import ComponentD from ".ComponentD.jsx"
+function ComponentC(/*/props*/) {
+   const user = useContext(userContext);
+
+   return(
+      <div className="box">
+         <h1>ComponentC</h1>
+         <h2>{`Hello again ${user}`}</h2>
+         <ComponentD /*/user={props.user}*//>
+      </div>
+   )
+
+   export default ComponentC
+}
+
+//ComponentD
+import React, {useContext} from "react";
+import {UserContext} from "./ComponentA.jsx"
+function ComponentD(/*/props*/) {
+   const user = useContext(UserContext);
+
+   return(
+      <div className="box">
+         <h1>ComponentD</h1>
+         <h2>{/*`Bye ${props.user}`*/
+         `Bye ${user}`}
+         </h2>
+      </div>
+   )
+
+   export default ComponentD
+}
+// 00000000000 useRef()
+// doesnt cause re-renders when its value changes (u can use it for indefinite values to then after pull what u need)
+// when u want a compoennt to "rember" some data but u dont want it to trig new render
+
+// 1) accessing/interacting w DOM elements
+// 2) handling focus, animations, transitions
+// 3) managing timers and intervals
+// 00000000000
+//App
+//Component
+import React, {useState, useEffect, useRef} from "react";
+function MyComponent(){
+   let [num, setNum] = useState(0);
+   const ref = useRef(0);
+   //useRef returns refOBJ with single >current< PROPERTY initially set to initial value provided
+   // useRefOBJ -> {current: initialState} (being 0 now)
+   // current CAN reffer to HTML element
+   useEffect(() => {console.log("COMPONENT RENDERED")})
+
+   //now lets ref current to HTML element
+   const inputRef = useRef(null);
+   const inputRefB = useRef(null);
+   const inputRefC = useRef(null);
+   // output of this is our input HTML elem (aka is in obj)
+
+   function handleClick1(){
+      setNum(prevNum => prevNum + 1);
+   }//here whenever our num updates it causes re-render (useState moment)
+   function handleClick2(){
+      ref.current = ref.current + 1;
+      console.log(ref.current); //gives number
+   }//here no matter how many times we update this, useEffect only procs once on render
+
+   function handleClick3(){
+      inputRef.current.focus();
+      //basically we access our input and .focus() default function, making it focused DOES NOT CAUSE RENDER
+      inputRef.current.style.backgroundColor = "yellow";
+      inputRefB.current.style.backgroundColor = "none";
+      inputRefC.current.style.backgroundColor = "none";
+   }
+   function handleClick3B(){
+      inputRefB.current.focus();
+      inputRef.current.style.backgroundColor = "none";
+      inputRefB.current.style.backgroundColor = "yellow";
+      inputRefC.current.style.backgroundColor = "none";
+   }
+   function handleClick3C(){
+      inputRefC.current.focus();
+      inputRef.current.style.backgroundColor = "none";
+      inputRefB.current.style.backgroundColor = "none";
+      inputRefC.current.style.backgroundColor = "yellow";
+   }
+   //whenever you invoke click on appropreate ref, it sets itself to yellow and others to none, and IT DOESNT RENDER COMPONENT
+
+
+   //ref in hmtl is special attribute, creates references to elements
+   return(
+   <div>
+      <button onClick={handleClick3}>
+         Click me A!
+      </button>
+      <input ref={inputRef}/>
+
+      <button onClick={handleClick3B}>
+         Click me B!
+      </button>
+      <input ref={inputRef}/>
+
+      <button onClick={handleClick3C}>
+         Click me C!
+      </button>
+      <input ref={inputRef}/>
+   </div>
+   )
+}export default MyComponent;

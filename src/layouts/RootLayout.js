@@ -34,7 +34,7 @@ function hideOnClickOutside(element, styledElement, style) {
 
 	document.addEventListener("click", outsideClickListener);
 }
-*/
+
 
 /*
 hideOnClickOutside(
@@ -74,6 +74,40 @@ export default function RootLayout() {
 		return () => window.removeEventListener("resize", handleResize);
 	}, [elementRef]);
 
+	const rootMenuRef = useRef(null);
+	useEffect(() => {
+		const Clicked = (e) => {
+			if (rootMenuRef.current && rootMenuRef.current.contains(e.target)) {
+				e.stopImmediatePropagation();
+				console.log(1111111111111);
+				console.log(rootMenuRef.current);
+				console.log(e.target);
+				//event is registred, comes to event handler, stops due to stopPropagation
+
+				/*document
+					.querySelectorAll(".nav-links-filter")[0]
+					.setAttribute("style", "visibility: visible; opacity:1;");*/
+				return;
+			} else {
+				console.log(22222);
+				/*
+				document
+					.querySelectorAll(".nav-links-filter")[0]
+					.setAttribute("style", "visibility: hidden; opacity:0;");*/
+				/*document
+					.querySelectorAll(".nav-links")[0]
+					.setAttribute("style", "transform: translate(0,0)");*/
+			}
+		};
+		console.log(1111111111111);
+		window.addEventListener("click", Clicked);
+
+		return () => {
+			console.log(1111111111111);
+			window.removeEventListener("click", Clicked);
+		};
+	}, [rootMenuRef]);
+
 	return (
 		<div className="root-layout">
 			<header>
@@ -91,6 +125,7 @@ export default function RootLayout() {
 						</div>
 					</NavLink>
 					<div
+						ref={rootMenuRef}
 						className="nav-links"
 
 						/*
@@ -116,6 +151,50 @@ export default function RootLayout() {
 						<NavLink to="about-classes">About Classes</NavLink>
 						<NavLink to="booking">Booking</NavLink>
 					</div>
+
+					{(() => {
+						if (window.innerWidth <= 500) {
+							return (
+								<div
+									className="nav-links-filter"
+									onClick={(e) => {
+										//transform: translate(100%, 0);
+										console.log(e, "this as menu");
+										document
+											.getElementsByClassName(
+												"nav-links"
+											)[0]
+											.setAttribute(
+												"style",
+												"transform: translate(100%, 0); z-index: 1000; filter: blur(0px) !important;"
+											);
+
+										document
+											.querySelectorAll(
+												".nav-links-filter"
+											)[0]
+											.setAttribute(
+												"style",
+												"unset: all;"
+											);
+
+										console.log("menu e");
+										console.log(e);
+										console.log(
+											document.querySelectorAll(
+												".nav-links"
+											)[0]
+										);
+									}}
+								></div>
+							);
+						}
+					})()}
+
+					{
+						//on useEffect becasue or press of compoennt will trigger it we can just render this component
+					}
+
 					<button
 						className="root-menu"
 						onClick={(e) => {
@@ -129,14 +208,17 @@ export default function RootLayout() {
 								);
 
 							document
-								.querySelectorAll(".nav-links")[0]
-								.style.setProperty(
-									"--nav-links-A-display",
-									"inline-block"
+								.querySelectorAll(".nav-links-filter")[0]
+								.setAttribute(
+									"style",
+									"visibility:visible; opacity:1;transition: visibility 0.6s, opacity 0.6s;"
 								);
 
 							console.log("menu e");
 							console.log(e);
+							console.log(
+								document.querySelectorAll(".nav-links")[0]
+							);
 						}}
 					>
 						<FontAwesomeIcon icon={faBars} />

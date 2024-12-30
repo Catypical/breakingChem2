@@ -81,6 +81,7 @@ Big elements - padding: 0.4rem 0.8rem
 
 :root {
 	font-size: 62.5%;
+	--device: "desktop";
 }
 
 /* CUSTOM STYLES */
@@ -115,7 +116,8 @@ body {
 	padding: 0;
 	font: inherit;
 
-	min-width: 0;
+	/*I dont know why but this ruins some svg-s, it is weird*/
+	/* min-width: 0; */
 }
 
 html {
@@ -528,6 +530,7 @@ nav h1:not(:first-child) {
 	width: clamp(250px, calc(0.24 * (100vw - 1060px) + 250px), 475px);
 
 	transform: translateX(-8%);
+	margin: 5%;
 }
 .hero-img * {
 	box-sizing: border-box;
@@ -546,11 +549,11 @@ nav h1:not(:first-child) {
 	grid-template-columns: 1fr 1fr;
 }
 
-.home-container div:nth-child(2) {
+.home-container div:nth-child(2):has(img) {
 	justify-content: start;
 }
 
-.home-container div:nth-child(3) {
+.home-container div:nth-child(3):has(img) {
 	justify-content: end;
 }
 
@@ -636,9 +639,9 @@ nav h1:not(:first-child) {
 	gap: 1.2rem;
 	min-width: 0px;
 }
-
-.home-about > * > :first-child,
-.home-classes > :first-child {
+/*has(p tag) or just change this */
+.home-about > * > :is(p),
+.home-classes > :is(p) {
 	font-size: 4.4rem;
 	font-weight: 500;
 
