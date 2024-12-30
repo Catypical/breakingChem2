@@ -8,6 +8,8 @@
 
 /////////onClick parameters + conditions
 //App
+
+
 import { Component } from "react";
 import Button from "./Button.jsx"
 function App() {
