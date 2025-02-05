@@ -1017,3 +1017,23 @@ CTA SECTION
 	cursor: pointer;
 	text-decoration: none;
 }
+/*about COURSES, SUBSCRIBTIONS    main page is courses, pricing (change link names)
+about courses would be brief showcase of videos
+subscribtions would be the popup that gives us the menu thats more time based rather than lecture based, but content can be downloaded
+
+make DB w Py and FastAPI,
+
+then you can store users and check email req, rules etc
+
+or maybe put it as a button on bottom right and then its easy to be logged in, itself is just a popping up window that will make you connected or not which is only important for buying process
+(remember to implement the check to see if someone is actually connected before double buying)
+ > send mail - have link in mail - when link press then account made
+
+tasks: 
+- correct the entry page with correct words that change site purpose
+- make plan of courses page
+- do the course page
+- plan the sub popup
+- make the sup popup
+
+*/

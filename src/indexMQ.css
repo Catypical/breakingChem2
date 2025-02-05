@@ -1084,7 +1084,6 @@ the only way to CONVERT UNITLESS units is to multiply them by the needed unit
 						calc(var(--MQmaxo) - var(--MQmino))
 				) * calc(100vw - var(--MQmin)) + var(--FSmin)
 		);
-
 		font-size: clamp(var(--FSmin), var(--prefClamp), var(--FSmax));
 	}
 
@@ -1101,22 +1100,91 @@ the only way to CONVERT UNITLESS units is to multiply them by the needed unit
 	.home-cta-left,
 	.home-cta-right {
 		justify-self: center;
-		margin: 0;
 
 		border-radius: unset;
 		margin: 20px;
+		margin-top: 30px; /* margin*1.5 */
+
+		width: 350px;
+		height: 390px;
+
+		width: 250px;
+		height: 320px;
+
+		--Wmino: 250;
+		--Wmaxo: 350;
+		--Wmin: calc(var(--Wmino) * 1px);
+		--Wmax: calc(var(--Wmaxo) * 1px);
+		--prefClamp: calc(
+			calc(
+					calc((var(--Wmaxo) - var(--Wmino)) * 1) /
+						calc(var(--MQmaxo) - var(--MQmino))
+				) * calc(100vw - var(--MQmin)) + var(--Wmin)
+		);
+		width: clamp(var(--Wmin), var(--prefClamp), var(--Wmax));
+
+		--Hmino: 320;
+		--Hmaxo: 390;
+		--Hmin: calc(var(--Hmino) * 1px);
+		--Hmax: calc(var(--Hmaxo) * 1px);
+		--prefClamp: calc(
+			calc(
+					calc((var(--Hmaxo) - var(--Hmino)) * 1) /
+						calc(var(--MQmaxo) - var(--MQmino))
+				) * calc(100vw - var(--MQmin)) + var(--Hmin)
+		);
+		height: clamp(var(--Hmin), var(--prefClamp), var(--Hmax));
 	}
 	.home-cta-right {
 		margin-top: 0px;
+		margin-bottom: 30px;
+	}
+
+	.home-cta-left > p,
+	.home-cta-right > p,
+	.home-cta-right > p > a {
+		font-size: 5rem;
+
+		font-size: 4.2rem;
+
+		--FSmino: 4.2;
+		--FSmaxo: 5;
+		--FSmin: calc(var(--FSmino) * 1rem);
+		--FSmax: calc(var(--FSmaxo) * 1rem);
+		--prefClamp: calc(
+			calc(
+					calc((var(--FSmaxo) - var(--FSmino)) * 10) /
+						calc(var(--MQmaxo) - var(--MQmino))
+				) * calc(100vw - var(--MQmin)) + var(--FSmin)
+		);
+		font-size: clamp(var(--FSmin), var(--prefClamp), var(--FSmax));
+
+		font-weight: 600;
+	}
+	.home-cta-left > p,
+	.home-cta-right > p {
+		justify-self: center;
+		padding: 40px;
+
+		padding: 20px;
+
+		--PADmino: 20;
+		--PADmaxo: 40;
+		--PADmin: calc(var(--PADmino) * 1px);
+		--PADmax: calc(var(--PADmaxo) * 1px);
+		--prefClamp: calc(
+			calc(
+					calc((var(--PADmaxo) - var(--PADmino)) * 1) /
+						calc(var(--MQmaxo) - var(--MQmino))
+				) * calc(100vw - var(--MQmin)) + var(--PADmin)
+		);
+		padding: clamp(var(--PADmin), var(--prefClamp), var(--PADmax));
 	}
 
 	.border-left,
 	.border-right {
 		width: calc(100% + 2px);
 		left: -1px;
-	}
-
-	.home-cta-left {
 	}
 }
 

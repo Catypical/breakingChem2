@@ -148,8 +148,8 @@ export default function RootLayout() {
 					>
 						<NavLink to="/">Home</NavLink>
 						<NavLink to="about-me">About Me</NavLink>
-						<NavLink to="about-classes">About Classes</NavLink>
-						<NavLink to="booking">Booking</NavLink>
+						<NavLink to="about-courses">About Courses</NavLink>
+						<NavLink to="my-courses">My Courses</NavLink>
 					</div>
 
 					{(() => {
