@@ -5,6 +5,9 @@ import { useEffect, useRef, useState } from "react";
 // ICONS
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faBars } from "@fortawesome/free-solid-svg-icons";
+
+import UserBtn from "../components/UserBtn";
+
 /*
 document
 	.getElementsByClassName("nav-links")[0]
@@ -54,6 +57,7 @@ elemF(document.querySelectorAll(".nav-links")[0]);
 export default function RootLayout() {
 	function pringing() {
 		console.log("this works");
+		console.log(UserBtn);
 	}
 	pringing();
 
@@ -110,6 +114,7 @@ export default function RootLayout() {
 
 	return (
 		<div className="root-layout">
+			<UserBtn />
 			<header>
 				<nav>
 					<NavLink to="/">

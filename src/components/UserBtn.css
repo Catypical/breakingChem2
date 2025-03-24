@@ -1,0 +1,122 @@
+.userBtn {
+	position: fixed;
+	display: inline-block;
+	right: 2.5%;
+	bottom: 5%;
+	z-index: 999;
+
+	border-radius: 100%;
+	cursor: pointer;
+}
+
+.userBtn-circle {
+	position: relative;
+	z-index: -1;
+
+	display: grid;
+	place-content: center;
+
+	box-shadow: 0 0 0 5px rgba(0, 0, 0, 0.9);
+
+	border-radius: 50%;
+	-moz-border-radius: 50%;
+	-webkit-border-radius: 50%;
+	overflow: hidden;
+
+	grid-area: 1 / 1;
+	align-self: center;
+	justify-self: center;
+	fill: rgba(255, 235, 60, 0.75);
+	background-color: rgba(255, 235, 60, 0.85);
+
+	transition: 0.8s;
+
+	width: 74px;
+	height: 74px;
+}
+
+.userBtn-path {
+	display: inline-block;
+	position: absolute;
+
+	align-self: center;
+	justify-self: center;
+	z-index: 9999;
+
+	width: 40px;
+	height: 40px;
+}
+
+.userBtn-path > svg {
+	width: inherit;
+	height: inherit;
+	color: rgba(0, 0, 0, 0.9);
+
+	transition: 0.4s;
+}
+
+.userBtn-circle:hover {
+}
+
+:is(.userBtn, .userBtn-circle):hover,
+:is(.userBtn, .userBtn-circle):active {
+	background-color: rgba(0, 0, 0, 0.9);
+	box-shadow: 0 0 0 3.9px rgba(255, 235, 60, 0.85);
+}
+:is(.userBtn, .userBtn-circle):hover .userBtn-path > svg,
+:is(.userBtn, .userBtn-circle):active .userBtn-path > svg {
+	color: rgba(255, 235, 60, 0.85);
+}
+
+/*
+USER LOGSIN
+*/
+.user-window {
+	display: flex;
+	flex-direction: column;
+	--width: 400px;
+	--height: 400px;
+	left: calc(50% - var(--width) / 2);
+	top: calc(50% - var(--width) / 2);
+
+	position: fixed;
+
+	width: var(--width);
+	height: var(--height);
+	border: solid 1px red;
+	z-index: 9999999;
+}
+
+.user-upbar {
+	display: flex;
+	height: 100px;
+	width: inherit;
+}
+.user-login {
+	width: 100px;
+}
+.user-signin {
+	width: 100px;
+}
+
+.user-ui-container {
+	position: relative;
+	height: 300px;
+}
+
+.user-login-ui {
+	position: absolute;
+
+	width: 100%;
+	height: 100%;
+	background-color: blue;
+	z-index: 0;
+}
+.user-signin-ui {
+	position: absolute;
+
+	width: 100%;
+	height: 100%;
+	background-color: blueviolet;
+	z-index: 1;
+}
