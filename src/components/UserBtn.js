@@ -11,6 +11,8 @@ console.log(typeof true);
 
 const userState = true;
 
+console.log(window.innerHeight, window.innerWidth);
+
 function UserBtn() {
 	return (
 		<>
@@ -38,6 +40,9 @@ function UserBtn() {
 					<div className="user-upbar">
 						<div className="user-login"></div>
 						<div className="user-signin"></div>
+						<div className="user-window-x">
+							<div className="x"></div>
+						</div>
 					</div>
 					{/*display of these is changed when specific upbar element is selected, aka upbar elems change z index of these elems below
                no need to dismount them due to often interchanging of each

@@ -74,34 +74,64 @@ USER LOGSIN
 .user-window {
 	display: flex;
 	flex-direction: column;
-	--width: 400px;
-	--height: 400px;
+	--width: 650px;
+	--height: 450px;
 	left: calc(50% - var(--width) / 2);
-	top: calc(50% - var(--width) / 2);
+	top: calc(50% - var(--height) / 2);
 
 	position: fixed;
 
 	width: var(--width);
 	height: var(--height);
-	border: solid 1px red;
+	border: solid 1px rgba(54, 148, 87, 0.8);
+
+	background-color: rgb(20 20 20);
 	z-index: 9999999;
 }
 
 .user-upbar {
 	display: flex;
-	height: 100px;
+	height: 15%;
 	width: inherit;
 }
-.user-login {
-	width: 100px;
+
+.user-upbar::after {
+	content: "";
+
+	width: 100%;
+	border-bottom: solid 1px rgba(54, 148, 87, 0.8);
+	/*transform: translate(calc((1px - 10%)), 0px);*/
+	/*transform: translateX(calc(-1px - 5%));*/
 }
+
+.user-window-x {
+	content: "";
+	width: 70px;
+	aspect-ratio: 1/1;
+	order: 5;
+}
+
+.user-login,
 .user-signin {
-	width: 100px;
+	aspect-ratio: 2/1;
+	border: solid 1px rgba(54, 148, 87, 0.8);
+	border-top: none;
+	border-left: none;
+	transition: 0.4s;
+}
+
+.user-login:hover,
+.user-signin:hover,
+.user-login:active,
+.user-signin:active {
+	border: solid 1px rgba(255, 235, 60, 0.9);
+	border-top: none;
+	border-left: none;
 }
 
 .user-ui-container {
 	position: relative;
-	height: 300px;
+	height: 100%;
 }
 
 .user-login-ui {
@@ -109,7 +139,7 @@ USER LOGSIN
 
 	width: 100%;
 	height: 100%;
-	background-color: blue;
+
 	z-index: 0;
 }
 .user-signin-ui {
@@ -117,6 +147,6 @@ USER LOGSIN
 
 	width: 100%;
 	height: 100%;
-	background-color: blueviolet;
+
 	z-index: 1;
 }
