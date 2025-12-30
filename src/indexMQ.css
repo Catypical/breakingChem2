@@ -911,6 +911,11 @@ the only way to CONVERT UNITLESS units is to multiply them by the needed unit
 	.home-about {
 		backdrop-filter: blur(20px);
 	}
+
+	.home-classes {
+		backdrop-filter: blur(20px);
+	}
+
 	.home-about svg,
 	.home-classes svg {
 		/* 19 24 bcs so translate is same*/
